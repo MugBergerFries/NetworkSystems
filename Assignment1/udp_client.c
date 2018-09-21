@@ -106,7 +106,7 @@ int main(int argc, char **argv) {
 	        strncpy(fname, buf+4, 4);
 	        printf("INPUTTED FILENAME: %s\n", fname);
 		    n = sendto(sockfd, buf, strlen(buf), 0, &serveraddr, serverlen);
- 			curfile = fopen(fname, "r+");
+ 			curfile = fopen(fname, "rb");
  			if (curfile!=NULL){
 	        	if (fseek(curfile, 0, SEEK_END) != 0) printf("ERROR IN FSEEK\n");
 		        filesize = ftello(curfile);
