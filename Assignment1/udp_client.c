@@ -68,6 +68,7 @@ int main(int argc, char **argv) {
 	    }
 	    /* send the message to the server */
 	    serverlen = sizeof(serveraddr);
+	    printf("STRLEN: %d\n", strlen(buf));
 	    n = sendto(sockfd, buf, strlen(buf), 0, &serveraddr, serverlen);
 	    if (n < 0) 
 	      error("ERROR in sendto");
