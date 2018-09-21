@@ -110,6 +110,7 @@ int main(int argc, char **argv) {
 	        	fseek(curfile, 0L, SEEK_END);
 		        filesize = ftell(curfile);
 		        rewind(curfile);
+		        printf("FILE SIZE: %d\n", filesize);
 		        char sizebuf[4096];
 		        sprintf(sizebuf, "%d", filesize);
 		        n = sendto(sockfd, sizebuf, 4096, 0, &serveraddr, serverlen);
