@@ -96,12 +96,7 @@ int main(int argc, char **argv) {
 	    	}
 	    	else{
 		    	curfile = fopen(fname, "w");
-		    	len = recvfrom(sockfd, buf, filesize, 0, &serveraddr, &serverlen);
-		    	if (len != filesize){
-		    		printf("ERROR: LEN != FILESIZE (%d != %d)\n", len, filesize);
-		  			printf("Client shutting down...\n");
-		    		return 0;
-		    	}
+		    	recvfrom(sockfd, buf, filesize, 0, &serveraddr, &serverlen);
 		    	fwrite(buffer, 1, len, curfile);
 		    	printf("FILE RECEIVED\n");
 		    	fclose(curfile);
