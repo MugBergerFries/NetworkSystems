@@ -105,7 +105,7 @@ int main(int argc, char **argv) {
         else if (!strncmp(buf, "put", 3)){
 	        strncpy(fname, buf+4, 4);
 	        printf("INPUTTED FILENAME: %s\n", fname);
- 			curfile = fopen(fname, "r");
+ 			curfile = fopen(fname, "r+");
  			if (curfile!=NULL){
 	        	fseek(curfile, 0L, SEEK_END);
 		        filesize = ftell(curfile);
