@@ -149,6 +149,7 @@ int main(int argc, char **argv) {
         return 0;
       }
       filesize = atoi(tmpbfr);
+      printf("FILE SIZE: %d\n", filesize);
       //filesize=atoi(buf);
       curfile = fopen(fname, "w");
       if (curfile == NULL) printf("ERROR: FILE NULL\n");
