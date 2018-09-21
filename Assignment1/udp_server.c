@@ -78,6 +78,7 @@ int main(int argc, char **argv) {
   /* 
    * main loop: wait for a datagram, then echo it
    */
+  printf("Entering the loop\n");
   clientlen = sizeof(clientaddr);
   while (1) {
 

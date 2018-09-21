@@ -39,6 +39,7 @@ int main(int argc, char **argv) {
 
     /* socket: create the socket */
     sockfd = socket(AF_INET, SOCK_DGRAM, 0);
+    printf("SOCKET: %d\n");
     if (sockfd < 0) 
         error("ERROR opening socket");
 
