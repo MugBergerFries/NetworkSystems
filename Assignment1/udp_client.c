@@ -28,6 +28,7 @@ int main(int argc, char **argv) {
     struct hostent *server;
     char *hostname;
     char buf[BUFSIZE];
+    bool off=0;
 
     /* check command line arguments */
     if (argc != 3) {
@@ -39,7 +40,6 @@ int main(int argc, char **argv) {
 
     /* socket: create the socket */
     sockfd = socket(AF_INET, SOCK_DGRAM, 0);
-    printf("SOCKET: %d\n");
     if (sockfd < 0) 
         error("ERROR opening socket");
 
@@ -58,20 +58,38 @@ int main(int argc, char **argv) {
     serveraddr.sin_port = htons(portno);
 
     /* get a message from the user */
-    bzero(buf, BUFSIZE);
-    printf("Please enter msg: ");
-    fgets(buf, BUFSIZE, stdin);
-
-    /* send the message to the server */
-    serverlen = sizeof(serveraddr);
-    n = sendto(sockfd, buf, strlen(buf), 0, &serveraddr, serverlen);
-    if (n < 0) 
-      error("ERROR in sendto");
-    
-    /* print the server's reply */
-    n = recvfrom(sockfd, buf, strlen(buf), 0, &serveraddr, &serverlen);
-    if (n < 0) 
-      error("ERROR in recvfrom");
-    printf("Echo from server: %s", buf);
+    while (1){
+	    bzero(buf, BUFSIZE);
+	    printf("Please enter msg: ");
+	    fgets(buf, BUFSIZE, stdin);
+	    if (buf=="exit"){
+	    	off=1;
+	    }
+	    /* send the message to the server */
+	    serverlen = sizeof(serveraddr);
+	    n = sendto(sockfd, buf, strlen(buf), 0, &serveraddr, serverlen);
+	    if (n < 0) 
+	      error("ERROR in sendto");
+	    
+	    /* print the server's reply */
+	    n = recvfrom(sockfd, buf, strlen(buf), 0, &serveraddr, &serverlen);
+	    if (n < 0) 
+	      error("ERROR in recvfrom");
+	  	if (off==1){
+	  		printf("Client shutting down...\n");
+	  		return 0;
+	  	}
+	    printf("%s\n", buf);
+	}
     return 0;
 }
+/*
+server possible replies:
+file
+-1: no file matching
+-2: file received
+-3: file not received
+-4: file deleted
+-5: file not found to delete
+list
+*/

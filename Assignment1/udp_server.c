@@ -34,6 +34,7 @@ int main(int argc, char **argv) {
   char *hostaddrp; /* dotted decimal host addr string */
   int optval; /* flag value for setsockopt */
   int n; /* message byte size */
+  bool off=0;
 
   /* 
    * check command line arguments 
@@ -87,7 +88,6 @@ int main(int argc, char **argv) {
     bzero(buf, BUFSIZE);
     n = recvfrom(sockfd, buf, BUFSIZE, 0,
 		 (struct sockaddr *) &clientaddr, &clientlen);
-    printf("recvfrom: %d\n", n);
     if (n < 0)
       error("ERROR in recvfrom");
 
@@ -104,13 +104,29 @@ int main(int argc, char **argv) {
     printf("server received datagram from %s (%s)\n", 
 	   hostp->h_name, hostaddrp);
     printf("server received %d/%d bytes: %s\n", strlen(buf), n, buf);
-    
-    /* 
-     * sendto: echo the input back to the client 
-     */
-    n = sendto(sockfd, buf, strlen(buf), 0, 
-	       (struct sockaddr *) &clientaddr, clientlen);
-    if (n < 0) 
-      error("ERROR in sendto");
+    if (buf=="exit"){
+      off=1;   
+      n = sendto(sockfd, "Server shutting down...", strlen("Server shutting down..."), 0, 
+         (struct sockaddr *) &clientaddr, clientlen);
+      if (n < 0) error("ERROR in sendto");
+      return 0;
+    }
+    /*if (buf=="exit"){
+      off=1;   
+      n = sendto(sockfd, "Server shutting down...", strlen("Server shutting down..."), 0, 
+         (struct sockaddr *) &clientaddr, clientlen);
+      if (n < 0) error("ERROR in sendto");
+    }*/
+
   }
 }
+/*
+server possible replies:
+file
+-1: no file matching
+-2: file received
+-3: file not received
+-4: file deleted
+-5: file not found to delete
+list
+*/
