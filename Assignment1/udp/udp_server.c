@@ -129,8 +129,9 @@ int main(int argc, char **argv) {
         sprintf(sizebuf, "%d", filesize);
         n = sendto(sockfd, sizebuf, 4096, 0, &clientaddr, clientlen);
         char tempbuf[filesize];
-        fread(tempbuf, 1, filesize, curfile);
-        n = sendto(sockfd, tempbuf, strlen(tempbuf), 0, &clientaddr, clientlen);
+        int temp;
+        temp = fread(tempbuf, 1, filesize, curfile);
+        n = sendto(sockfd, tempbuf, temp, 0, &clientaddr, clientlen);
       }
       else{
         sprintf(sizebuf, "%d", -1);
