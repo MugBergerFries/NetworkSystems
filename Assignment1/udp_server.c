@@ -78,7 +78,6 @@ int main(int argc, char **argv) {
   /* 
    * main loop: wait for a datagram, then echo it
    */
-  printf("Entering the loop\n");
   clientlen = sizeof(clientaddr);
   while (1) {
 
@@ -88,6 +87,7 @@ int main(int argc, char **argv) {
     bzero(buf, BUFSIZE);
     n = recvfrom(sockfd, buf, BUFSIZE, 0,
 		 (struct sockaddr *) &clientaddr, &clientlen);
+    printf("recvfrom: %d\n", n);
     if (n < 0)
       error("ERROR in recvfrom");
 
