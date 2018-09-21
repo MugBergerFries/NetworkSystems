@@ -123,7 +123,7 @@ int main(int argc, char **argv) {
       curfile = fopen(fname, "r");
       char sizebuf[4096];
       if (curfile != NULL){
-        fseek(curfile, 0L, SEEK_END);
+        fseek(curfile, 0, SEEK_END);
         filesize = ftell(curfile);
         rewind(curfile);
         sprintf(sizebuf, "%d", filesize);

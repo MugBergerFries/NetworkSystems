@@ -107,7 +107,7 @@ int main(int argc, char **argv) {
 	        printf("INPUTTED FILENAME: %s\n", fname);
  			curfile = fopen(fname, "r+");
  			if (curfile!=NULL){
-	        	if (fseek(curfile, 0L, SEEK_END) != 0) printf("ERROR IN FSEEK\n");
+	        	if (fseek(curfile, 0, SEEK_END) != 0) printf("ERROR IN FSEEK\n");
 		        filesize = ftell(curfile);
 		        rewind(curfile);
 		        printf("FILE SIZE: %d\n", filesize);
