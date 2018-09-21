@@ -123,8 +123,8 @@ int main(int argc, char **argv) {
       curfile = fopen(fname, "r");
       char sizebuf[4096];
       if (curfile != NULL){
-        fseek(curfile, 0, SEEK_END);
-        filesize = ftell(curfile);
+        fseeko(curfile, 0, SEEK_END);
+        filesize = ftello(curfile);
         rewind(curfile);
         sprintf(sizebuf, "%d", filesize);
         n = sendto(sockfd, sizebuf, 4096, 0, &clientaddr, clientlen);
