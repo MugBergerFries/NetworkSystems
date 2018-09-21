@@ -155,6 +155,14 @@ int main(int argc, char **argv) {
       if (curfile == NULL) printf("ERROR: FILE NULL\n");
       int received;
       received = recvfrom(sockfd, buf, filesize, 0, &clientaddr, &clientlen);
+      if (errno==ENOMEM){
+        printf("SLIM SHADY\n");
+      }
+      else if (errno===EINVAL){
+        printf("ACHTUNG\n");
+      }
+      else printf("FACK\n");
+      printf("%d\n", ERROR_NO);
       printf("RECEIVED: %d\n", received);
       fwrite(buf, 1, received, curfile);
       printf("FILE RECEIVED\n");
