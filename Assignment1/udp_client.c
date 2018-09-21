@@ -11,6 +11,7 @@
 #include <netinet/in.h>
 #include <netdb.h> 
 #include <stdbool.h>
+#include <errno.h>
 
 #define BUFSIZE 1024
 
