@@ -178,7 +178,7 @@ int main(int argc, char **argv) {
         printf("Could not open directory\n");
         return 0;
       }
-      while ((dire = readdir(dirp)) != NULL) sprintf(buf, "%s", dire->d_name);
+      while ((dire = readdir(dirp)) != NULL) strcat(buf, dire->d_name);
       n = sendto(sockfd, buf, strlen(buf), 0, &clientaddr, clientlen);
       closedir(dirp);
       printf("%s\n", buf);
