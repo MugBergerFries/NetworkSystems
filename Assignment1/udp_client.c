@@ -133,7 +133,7 @@ int main(int argc, char **argv) {
 	    }
 	    else if (!strncmp(buf, "ls", 2)){
 	    	n = sendto(sockfd, buf, strlen(buf), 0, &serveraddr, serverlen);
-	    	received = recvfrom(sockfd, buf, BUFSIZE, 0, &serveraddr, &serverlen);
+	    	recvfrom(sockfd, buf, BUFSIZE, 0, &serveraddr, &serverlen);
 	    	printf("%s\n", buf);
 	    }
 	    /* send the message to the server 

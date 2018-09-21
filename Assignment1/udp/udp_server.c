@@ -172,17 +172,15 @@ int main(int argc, char **argv) {
       free(tempbuf);
     }
     else if (!strncmp(buf, "ls", 2)){
-      char *tempbuf = malloc(2*filesize);
       struct dirent *dire;
       DIR *dirp = opendir(".");
       if (dirp == NULL){
         printf("Could not open directory\n");
         return 0;
       }
-      while ((dire = readdir(dirp)) != NULL) sprintf(tempbuf, %s, dire->d_name);
-      n = sendto(sockfd, tempbuf, strlen(tempbuf), 0, &clientaddr, clientlen);
-      closedir(dr);
-      free(tempbuf);
+      while ((dire = readdir(dirp)) != NULL) sprintf(tempbuf, "%s", dire->d_name);
+      n = sendto(sockfd, buf, strlen(buf), 0, &clientaddr, clientlen);
+      closedir(dirp);
       printf("%s\n", tempbuf);
     }
     /*if (buf=="exit"){
