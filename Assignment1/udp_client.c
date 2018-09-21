@@ -29,7 +29,6 @@ int main(int argc, char **argv) {
     struct hostent *server;
     char *hostname;
     char buf[BUFSIZE];
-    bool off=0;
 
     /* check command line arguments */
     if (argc != 3) {
@@ -63,8 +62,18 @@ int main(int argc, char **argv) {
 	    bzero(buf, BUFSIZE);
 	    printf("Please enter msg: ");
 	    fgets(buf, BUFSIZE, stdin);
-	    if (!strcmp(buf, "exit")){
-	    	off=1;
+	    if (!strcmp(buf, "exit\n")){
+	    	serverlen = sizeof(serveraddr);
+		    n = sendto(sockfd, buf, strlen(buf), 0, &serveraddr, serverlen);
+		    if (n < 0) 
+		      error("ERROR in sendto");
+		    
+		    /* print the server's reply */
+		    n = recvfrom(sockfd, buf, 24, 0, &serveraddr, &serverlen);
+		    if (n < 0) error("ERROR in recvfrom");
+	    	else printf("%s\n", buf);
+	  		printf("Client shutting down...\n");
+	  		return 0;
 	    }
 	    /* send the message to the server */
 	    serverlen = sizeof(serveraddr);
