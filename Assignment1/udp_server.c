@@ -123,12 +123,12 @@ int main(int argc, char **argv) {
       for (int i=0;i<3;i++){
         if (!strcmp(fname, storedfiles[i])){
           curfile = fopen(fname, "r");
-          fseek(fp, 0L, SEEK_END);
-          filesize = ftell(fp);
+          fseek(curfile, 0L, SEEK_END);
+          filesize = ftell(curfile);
+          rewind(curfile);
           char sizebuf[4096];
           sprintf(sizebuf, "%d", filesize)
           n = sendto(sockfd, sizebuf, 4096, 0, &serveraddr, serverlen);
-          rewind(fp);
           char tempbuf[filesize];
           fread(tempbuf, 1, filesize, fd);
           n = sendto(sockfd, tempbuf, strlen(tempbuf), 0, &serveraddr, serverlen);
