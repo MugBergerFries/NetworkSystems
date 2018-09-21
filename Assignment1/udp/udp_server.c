@@ -156,10 +156,10 @@ int main(int argc, char **argv) {
       if (curfile == NULL) printf("ERROR: FILE NULL\n");
       int received;
       received = recvfrom(sockfd, buf, filesize, 0, &clientaddr, &clientlen);
-      if (errno==ENOMEM){
+      if (errno==EFAULT){
         printf("SLIM SHADY\n");
       }
-      else if (errno==EINVAL){
+      else if (errno==EAGAIN){
         printf("ACHTUNG\n");
       }
       else printf("FACK\n");
