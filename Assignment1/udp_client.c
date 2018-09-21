@@ -94,7 +94,7 @@ int main(int argc, char **argv) {
 	    		printf("Server could not locate file\n");
 	    	}
 	    	else{
-		    	curfile = fopen(fname, "w");
+		    	curfile = fopen(fname, "wb");
 		    	int received;
 		    	received = recvfrom(sockfd, buf, filesize, 0, &serveraddr, &serverlen);
 		    	fwrite(buf, 1, received, curfile);

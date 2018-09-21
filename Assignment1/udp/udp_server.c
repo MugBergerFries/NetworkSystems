@@ -120,7 +120,7 @@ int main(int argc, char **argv) {
     else if (!strncmp(buf, "get", 3)){
       strncpy(fname, buf+4, 4);
       printf("INPUTTED FILENAME: %s\n", fname);
-      curfile = fopen(fname, "r");
+      curfile = fopen(fname, "rb");
       char sizebuf[4096];
       if (curfile != NULL){
         fseeko(curfile, 0, SEEK_END);
