@@ -85,10 +85,6 @@ int main(int argc, char **argv) {
 	    n = recvfrom(sockfd, buf, strlen(buf), 0, &serveraddr, &serverlen);
 	    if (n < 0) 
 	      error("ERROR in recvfrom");
-	  	if (off==1){
-	  		printf("Client shutting down...\n");
-	  		return 0;
-	  	}
 	    printf("%s\n", buf);
 	}
     return 0;
