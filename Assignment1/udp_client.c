@@ -96,8 +96,9 @@ int main(int argc, char **argv) {
 	    	}
 	    	else{
 		    	curfile = fopen(fname, "w");
-		    	recvfrom(sockfd, buf, filesize, 0, &serveraddr, &serverlen);
-		    	fwrite(buffer, 1, len, curfile);
+		    	int received;
+		    	received = recvfrom(sockfd, buf, filesize, 0, &serveraddr, &serverlen);
+		    	fwrite(buf, 1, received, curfile);
 		    	printf("FILE RECEIVED\n");
 		    	fclose(curfile);
 	    	}
