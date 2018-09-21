@@ -131,7 +131,7 @@ int main(int argc, char **argv) {
 	  			return 0;
 	    	}
 	    }
-	    else if (!strncmp(buf, "ls", 2)){
+	    else if (!strncmp(buf, "ls", 2) || !strncmp(buf, "delete", 6)){
 	    	n = sendto(sockfd, buf, strlen(buf), 0, &serveraddr, serverlen);
 	    	recvfrom(sockfd, buf, BUFSIZE, 0, &serveraddr, &serverlen);
 	    	printf("%s\n", buf);
