@@ -35,7 +35,7 @@ int main(int argc, char **argv) {
   char *hostaddrp; /* dotted decimal host addr string */
   int optval; /* flag value for setsockopt */
   int n; /* message byte size */
-  int filesize;
+  long filesize;
   char fname[5];
   FILE* curfile;
   char storedfiles[3][5];
@@ -123,8 +123,8 @@ int main(int argc, char **argv) {
       curfile = fopen(fname, "r");
       char sizebuf[4096];
       if (curfile != NULL){
-        fseek(curfile, 0L, SEEK_END);
-        filesize = ftell(curfile);
+        fseeko(curfile, 0, SEEK_END);
+        filesize = ftello(curfile);
         rewind(curfile);
         sprintf(sizebuf, "%d", filesize);
         n = sendto(sockfd, sizebuf, 4096, 0, &clientaddr, clientlen);
@@ -142,7 +142,6 @@ int main(int argc, char **argv) {
       printf("INPUTTED FILENAME: %s\n", fname);
       char tmpbfr[4096];
       n = recvfrom(sockfd, tmpbfr, 4096, 0, &clientaddr, &clientlen); //File size
-      if (n < 0) error("ERROR in recvfrom");
       printf("Client sending file...\n");
       if (n < 0){
         error("ERROR in recvfrom");
@@ -150,13 +149,10 @@ int main(int argc, char **argv) {
         return 0;
       }
       filesize = atoi(tmpbfr);
+      printf("FILE SIZE: %d\n", filesize);
       //filesize=atoi(buf);
       curfile = fopen(fname, "w");
-      for (int i=0;i<3;i++){
-        if (!strcmp(fname, storedfiles[i])){
-
-        }
-      }
+      if (curfile == NULL) printf("ERROR: FILE NULL\n");
       int received;
       received = recvfrom(sockfd, buf, filesize, 0, &clientaddr, &clientlen);
       fwrite(buf, 1, received, curfile);
