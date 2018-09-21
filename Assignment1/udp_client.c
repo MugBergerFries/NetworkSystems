@@ -29,7 +29,7 @@ int main(int argc, char **argv) {
     struct hostent *server;
     char *hostname;
     char buf[BUFSIZE];
-    int filesize;
+    long filesize;
     char fname[4];
     FILE* curfile;
 
