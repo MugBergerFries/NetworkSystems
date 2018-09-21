@@ -133,6 +133,7 @@ int main(int argc, char **argv) {
         int temp;
         temp = fread(tempbuf, 1, filesize, curfile);
         n = sendto(sockfd, tempbuf, temp, 0, &clientaddr, clientlen);
+        free(tempbuf);
       }
       else{
         sprintf(sizebuf, "%d", -1);
@@ -155,18 +156,19 @@ int main(int argc, char **argv) {
       curfile = fopen(fname, "wb");
       if (curfile == NULL) printf("ERROR: FILE NULL\n");
       int received;
-      received = recvfrom(sockfd, buf, filesize, 0, &clientaddr, &clientlen);
+      char *tempbuf = malloc(2*filesize);
+      received = recvfrom(sockfd, tempbuf, filesize, 0, &clientaddr, &clientlen);
       if (errno==EFAULT){
         printf("SLIM SHADY\n");
       }
       else if (errno==EAGAIN){
         printf("ACHTUNG\n");
       }
-      else printf("FACK\n");
       printf("RECEIVED: %d\n", received);
-      fwrite(buf, 1, received, curfile);
+      fwrite(tempbuf, 1, received, curfile);
       printf("FILE RECEIVED\n");
       fclose(curfile);
+      free(tempbuf);
     } 
     /*if (buf=="exit"){
       off=1;   

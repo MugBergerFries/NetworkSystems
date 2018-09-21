@@ -97,8 +97,9 @@ int main(int argc, char **argv) {
 	    	else{
 		    	curfile = fopen(fname, "wb");
 		    	int received;
-		    	received = recvfrom(sockfd, buf, filesize, 0, &serveraddr, &serverlen);
-		    	fwrite(buf, 1, received, curfile);
+        		char *tempbuf = malloc(2*filesize);
+		    	received = recvfrom(sockfd, tempbuf, filesize, 0, &serveraddr, &serverlen);
+		    	fwrite(tempbuf, 1, received, curfile);
 		    	printf("FILE RECEIVED\n");
 		    	fclose(curfile);
 	    	}
