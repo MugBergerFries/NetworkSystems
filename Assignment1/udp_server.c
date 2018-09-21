@@ -105,7 +105,7 @@ int main(int argc, char **argv) {
     printf("server received datagram from %s (%s)\n", 
 	   hostp->h_name, hostaddrp);
     printf("server received %d/%d bytes: %s\n", strlen(buf), n, buf);
-    if (strcmp(buf, "exit\n")){
+    if (!strcmp(buf, "exit\n")){
       off=1;   
       n = sendto(sockfd, "Server shutting down...", strlen("Server shutting down..."), 0, 
          (struct sockaddr *) &clientaddr, clientlen);
