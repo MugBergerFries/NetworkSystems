@@ -63,7 +63,7 @@ int main(int argc, char **argv) {
 	    bzero(buf, BUFSIZE);
 	    printf("Please enter msg: ");
 	    fgets(buf, BUFSIZE, stdin);
-	    if (buf=="exit\n"){
+	    if (strcmp(buf, "exit")){
 	    	off=1;
 	    }
 	    /* send the message to the server */
