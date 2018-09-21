@@ -149,12 +149,12 @@ int main(int argc, char **argv) {
         return 0;
       }
       filesize = atoi(tmpbfr);
-      printf("FILE SIZE: %d\n", filesize);
       //filesize=atoi(buf);
       curfile = fopen(fname, "w");
       if (curfile == NULL) printf("ERROR: FILE NULL\n");
       int received;
       received = recvfrom(sockfd, buf, filesize, 0, &clientaddr, &clientlen);
+      printf("RECEIVED: %d\n", received);
       fwrite(buf, 1, received, curfile);
       printf("FILE RECEIVED\n");
       fclose(curfile);
