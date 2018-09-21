@@ -127,10 +127,10 @@ int main(int argc, char **argv) {
           filesize = ftell(curfile);
           rewind(curfile);
           char sizebuf[4096];
-          sprintf(sizebuf, "%d", filesize)
+          sprintf(sizebuf, "%d", filesize);
           n = sendto(sockfd, sizebuf, 4096, 0, &serveraddr, serverlen);
           char tempbuf[filesize];
-          fread(tempbuf, 1, filesize, fd);
+          fread(tempbuf, 1, filesize, curfile);
           n = sendto(sockfd, tempbuf, strlen(tempbuf), 0, &serveraddr, serverlen);
         }
         else if (i==2){
