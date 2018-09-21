@@ -119,7 +119,7 @@ int main(int argc, char **argv) {
 		        int temp;
 		        temp = fread(tempbuf, 1, filesize, curfile);
 		        printf("%d\n", temp);
-		        n = sendto(sockfd, tempbuf, strlen(tempbuf), 0, &serveraddr, serverlen);
+		        n = sendto(sockfd, tempbuf, temp, 0, &serveraddr, serverlen);
 	    	}
 	    	else{
 	    		printf("FAILED TO OPEN FILE\n");
