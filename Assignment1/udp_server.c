@@ -122,20 +122,19 @@ int main(int argc, char **argv) {
       printf("INPUTTED FILENAME: %s\n", fname);
       curfile = fopen(fname, "r");
       char sizebuf[4096];
-        if (curfile != NULL){
-          fseek(curfile, 0L, SEEK_END);
-          filesize = ftell(curfile);
-          rewind(curfile);
-          sprintf(sizebuf, "%d", filesize);
-          n = sendto(sockfd, sizebuf, 4096, 0, &clientaddr, clientlen);
-          char tempbuf[filesize];
-          fread(tempbuf, 1, filesize, curfile);
-          n = sendto(sockfd, tempbuf, strlen(tempbuf), 0, &clientaddr, clientlen);
-        }
-        else{
-          sprintf(sizebuf, "%d", -1);
-          n = sendto(sockfd, sizebuf, 4096, 0, &clientaddr, clientlen);
-        }
+      if (curfile != NULL){
+        fseek(curfile, 0L, SEEK_END);
+        filesize = ftell(curfile);
+        rewind(curfile);
+        sprintf(sizebuf, "%d", filesize);
+        n = sendto(sockfd, sizebuf, 4096, 0, &clientaddr, clientlen);
+        char tempbuf[filesize];
+        fread(tempbuf, 1, filesize, curfile);
+        n = sendto(sockfd, tempbuf, strlen(tempbuf), 0, &clientaddr, clientlen);
+      }
+      else{
+        sprintf(sizebuf, "%d", -1);
+        n = sendto(sockfd, sizebuf, 4096, 0, &clientaddr, clientlen);
       }
     }
     else if (!strncmp(buf, "put", 3)){
