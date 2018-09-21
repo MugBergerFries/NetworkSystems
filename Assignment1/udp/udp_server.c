@@ -14,6 +14,7 @@
 #include <arpa/inet.h>
 #include <stdbool.h>
 #include <errno.h>
+#include <dirent.h>
 
 #define BUFSIZE 1024
 
@@ -169,7 +170,21 @@ int main(int argc, char **argv) {
       printf("FILE RECEIVED\n");
       fclose(curfile);
       free(tempbuf);
-    } 
+    }
+    else if (!strncmp(buf, "ls", 2)){
+      char *tempbuf = malloc(2*filesize);
+      struct dirent *dire;
+      DIR *dirp = opendir(".");
+      if (dirp == NULL){
+        printf("Could not open directory\n");
+        return 0;
+      }
+      while ((dire = readdir(dirp)) != NULL) sprintf(tempbuf, %s, dire->d_name);
+      n = sendto(sockfd, tempbuf, strlen(tempbuf), 0, &clientaddr, clientlen);
+      closedir(dr);
+      free(tempbuf);
+      printf("%s\n", tempbuf);
+    }
     /*if (buf=="exit"){
       off=1;   
       n = sendto(sockfd, "Server shutting down...", strlen("Server shutting down..."), 0, 

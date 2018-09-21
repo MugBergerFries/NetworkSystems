@@ -102,6 +102,7 @@ int main(int argc, char **argv) {
 		    	fwrite(tempbuf, 1, received, curfile);
 		    	printf("FILE RECEIVED\n");
 		    	fclose(curfile);
+		    	free(tempbuf);
 	    	}
 	    }
         else if (!strncmp(buf, "put", 3)){
@@ -122,12 +123,18 @@ int main(int argc, char **argv) {
 		        temp = fread(tempbuf, 1, filesize, curfile);
 		        printf("%d\n", temp);
 		        n = sendto(sockfd, tempbuf, temp, 0, &serveraddr, serverlen);
+		    	free(tempbuf);
 	    	}
 	    	else{
 	    		printf("FAILED TO OPEN FILE\n");
 	  			printf("Client shutting down...\n");
 	  			return 0;
 	    	}
+	    }
+	    else if (!strncmp(buf, "ls", 2)){
+	    	n = sendto(sockfd, buf, strlen(buf), 0, &serveraddr, serverlen);
+	    	received = recvfrom(sockfd, buf, BUFSIZE, 0, &serveraddr, &serverlen);
+	    	printf("%s\n", buf);
 	    }
 	    /* send the message to the server 
 	    n = sendto(sockfd, buf, strlen(buf), 0, &serveraddr, serverlen);
