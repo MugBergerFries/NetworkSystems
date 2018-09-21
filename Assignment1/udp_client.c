@@ -65,8 +65,8 @@ int main(int argc, char **argv) {
 	    bzero(buf, BUFSIZE);
 	    printf("Please enter msg: ");
 	    fgets(buf, BUFSIZE, stdin);
+	    serverlen = sizeof(serveraddr);
 	    if (!strcmp(buf, "exit\n")){
-	    	serverlen = sizeof(serveraddr);
 		    n = sendto(sockfd, buf, strlen(buf), 0, &serveraddr, serverlen);
 		    if (n < 0) error("ERROR in sendto");
 		    n = recvfrom(sockfd, buf, 24, 0, &serveraddr, &serverlen);
@@ -78,7 +78,6 @@ int main(int argc, char **argv) {
 	    else if (!strncmp(buf, "get", 3)){
 	    	strncpy(fname, buf+4, 4);
 	    	printf("INPUTTED FILENAME: %s\n", fname);
-	    	serverlen = sizeof(serveraddr);
 		    n = sendto(sockfd, buf, strlen(buf), 0, &serveraddr, serverlen);
 		    if (n < 0) error("ERROR in sendto");
 		    printf("Client requesting file...\n");
@@ -103,17 +102,37 @@ int main(int argc, char **argv) {
 		    	fclose(curfile);
 	    	}
 	    }
-	    /* send the message to the server */
-	    serverlen = sizeof(serveraddr);
+        else if (!strncmp(buf, "put", 3)){
+	        strncpy(fname, buf+4, 4);
+	        printf("INPUTTED FILENAME: %s\n", fname);
+ 			curfile = fopen(fname, "r");
+ 			if (curfile!=NULL){
+	        	fseek(curfile, 0L, SEEK_END);
+		        filesize = ftell(curfile);
+		        rewind(curfile);
+		        char sizebuf[4096];
+		        sprintf(sizebuf, "%d", filesize);
+		        n = sendto(sockfd, sizebuf, 4096, 0, &serveraddr, serverlen);
+		        char tempbuf[filesize];
+		        fread(tempbuf, 1, filesize, curfile);
+		        n = sendto(sockfd, tempbuf, strlen(tempbuf), 0, &serveraddr, serverlen);
+	    	}
+	    	else{
+	    		printf("FAILED TO OPEN FILE\n");
+	  			printf("Client shutting down...\n");
+	  			return 0;
+	    	}
+	    }
+	    /* send the message to the server 
 	    n = sendto(sockfd, buf, strlen(buf), 0, &serveraddr, serverlen);
 	    if (n < 0) 
 	      error("ERROR in sendto");
 	    
-	    /* print the server's reply */
+	     print the server's reply 
 	    n = recvfrom(sockfd, buf, strlen(buf), 0, &serveraddr, &serverlen);
 	    if (n < 0) 
 	      error("ERROR in recvfrom");
-	    printf("%s\n", buf);
+	    printf("%s\n", buf);*/
 	}
     return 0;
 }

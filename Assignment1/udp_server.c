@@ -120,9 +120,8 @@ int main(int argc, char **argv) {
     else if (!strncmp(buf, "get", 3)){
       strncpy(fname, buf+4, 4);
       printf("INPUTTED FILENAME: %s\n", fname);
-      for (int i=0;i<3;i++){
-        if (!strcmp(fname, storedfiles[i])){
-          curfile = fopen(fname, "r");
+      curfile = fopen(fname, "r");
+        if (curfile != NULL){
           fseek(curfile, 0L, SEEK_END);
           filesize = ftell(curfile);
           rewind(curfile);
@@ -133,11 +132,38 @@ int main(int argc, char **argv) {
           fread(tempbuf, 1, filesize, curfile);
           n = sendto(sockfd, tempbuf, strlen(tempbuf), 0, &clientaddr, clientlen);
         }
-        else if (i==2){
-          n = sendto(sockfd, &filesize, sizeof(int), 0, &clientaddr, clientlen);
+        else{
+          sprintf(sizebuf, "%d", -1);
+          n = sendto(sockfd, sizebuf, 4096, 0, &clientaddr, clientlen);
         }
       }
     }
+    else if (!strncmp(buf, "put", 3)){
+      strncpy(fname, buf+4, 4);
+      printf("INPUTTED FILENAME: %s\n", fname);
+      char tmpbfr[4096];
+      n = recvfrom(sockfd, tmpbfr, 4096, 0, &clientaddr, &clientlen); //File size
+      if (n < 0) error("ERROR in recvfrom");
+      printf("Client sending file...\n");
+      if (n < 0){
+        error("ERROR in recvfrom");
+        printf("Server shutting down...\n");
+        return 0;
+      }
+      filesize = atoi(tmpbfr);
+      //filesize=atoi(buf);
+      curfile = fopen(fname, "w");
+      for (int i=0;i<3;i++){
+        if (!strcmp(fname, storedfiles[i])){
+
+        }
+      }
+      int received;
+      received = recvfrom(sockfd, buf, filesize, 0, &clientaddr, &clientlen);
+      fwrite(buf, 1, received, curfile);
+      printf("FILE RECEIVED\n");
+      fclose(curfile);
+    } 
     /*if (buf=="exit"){
       off=1;   
       n = sendto(sockfd, "Server shutting down...", strlen("Server shutting down..."), 0, 
