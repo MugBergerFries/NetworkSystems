@@ -129,7 +129,7 @@ int main(int argc, char **argv) {
         rewind(curfile);
         sprintf(sizebuf, "%d", filesize);
         n = sendto(sockfd, sizebuf, 4096, 0, &clientaddr, clientlen);
-        char tempbuf[filesize];
+        char *tempbuf = malloc(filesize);
         int temp;
         temp = fread(tempbuf, 1, filesize, curfile);
         n = sendto(sockfd, tempbuf, temp, 0, &clientaddr, clientlen);

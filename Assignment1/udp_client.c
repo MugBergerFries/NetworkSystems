@@ -116,7 +116,7 @@ int main(int argc, char **argv) {
 		        char sizebuf[4096];
 		        sprintf(sizebuf, "%d", filesize);
 		        n = sendto(sockfd, sizebuf, 4096, 0, &serveraddr, serverlen);
-		        char tempbuf[filesize];
+		        char* tempbuf = malloc(filesize);
 		        int temp;
 		        temp = fread(tempbuf, 1, filesize, curfile);
 		        printf("%d\n", temp);
