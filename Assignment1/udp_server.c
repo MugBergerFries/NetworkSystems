@@ -35,7 +35,13 @@ int main(int argc, char **argv) {
   char *hostaddrp; /* dotted decimal host addr string */
   int optval; /* flag value for setsockopt */
   int n; /* message byte size */
-  bool off=0;
+  int filesize;
+  char fname[5];
+  FILE* curfile;
+  char storedfiles[3][5];
+  int filecount=0;
+  int fileindex;
+
 
   /* 
    * check command line arguments 
@@ -106,11 +112,31 @@ int main(int argc, char **argv) {
 	   hostp->h_name, hostaddrp);
     printf("server received %d/%d bytes: %s\n", strlen(buf), n, buf);
     if (!strcmp(buf, "exit\n")){
-      off=1;   
       n = sendto(sockfd, "Server shutting down...", strlen("Server shutting down..."), 0, 
          (struct sockaddr *) &clientaddr, clientlen);
       if (n < 0) error("ERROR in sendto");
       return 0;
+    }
+    else if (!strncmp(buf, "get", 3)){
+      strncpy(fname, buf+4, 4);
+      printf("INPUTTED FILENAME: %s\n", fname);
+      for (int i=0;i<3;i++){
+        if (!strcmp(fname, storedfiles[i])){
+          curfile = fopen(fname, "r");
+          fseek(fp, 0L, SEEK_END);
+          filesize = ftell(fp);
+          char sizebuf[4096];
+          sprintf(sizebuf, "%d", filesize)
+          n = sendto(sockfd, sizebuf, 4096, 0, &serveraddr, serverlen);
+          rewind(fp);
+          char tempbuf[filesize];
+          fread(tempbuf, 1, filesize, fd);
+          n = sendto(sockfd, tempbuf, strlen(tempbuf), 0, &serveraddr, serverlen);
+        }
+        else if (i==2){
+          n = sendto(sockfd, &filesize, sizeof(int), 0, &serveraddr, serverlen);
+        }
+      }
     }
     /*if (buf=="exit"){
       off=1;   

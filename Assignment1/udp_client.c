@@ -29,6 +29,9 @@ int main(int argc, char **argv) {
     struct hostent *server;
     char *hostname;
     char buf[BUFSIZE];
+    int filesize;
+    char fname[4];
+    FILE* curfile;
 
     /* check command line arguments */
     if (argc != 3) {
@@ -65,15 +68,44 @@ int main(int argc, char **argv) {
 	    if (!strcmp(buf, "exit\n")){
 	    	serverlen = sizeof(serveraddr);
 		    n = sendto(sockfd, buf, strlen(buf), 0, &serveraddr, serverlen);
-		    if (n < 0) 
-		      error("ERROR in sendto");
-		    
-		    /* print the server's reply */
+		    if (n < 0) error("ERROR in sendto");
 		    n = recvfrom(sockfd, buf, 24, 0, &serveraddr, &serverlen);
 		    if (n < 0) error("ERROR in recvfrom");
 	    	else printf("%s\n", buf);
 	  		printf("Client shutting down...\n");
 	  		return 0;
+	    }
+	    else if (!strncmp(buf, "get", 3)){
+	    	strncpy(fname, buf+4, 4);
+	    	printf("INPUTTED FILENAME: %s\n", fname);
+	    	serverlen = sizeof(serveraddr);
+		    n = sendto(sockfd, buf, strlen(buf), 0, &serveraddr, serverlen);
+		    if (n < 0) error("ERROR in sendto");
+		    printf("Client requesting file...\n");
+		    char tmpbfr[4096];
+		    n = recvfrom(sockfd, tmpbfr, 4096, 0, &serveraddr, &serverlen); //File size
+		    if (n < 0){
+		    	error("ERROR in recvfrom");
+	  			printf("Client shutting down...\n");
+	  			return 0;
+		    }
+		    filesize = atoi(tmpbfr);
+	    	//filesize=atoi(buf);
+	    	if (filesize==-1){
+	    		printf("Server could not locate file\n");
+	    	}
+	    	else{
+		    	curfile = fopen(fname, "w");
+		    	len = recvfrom(sockfd, buf, filesize, 0, &serveraddr, &serverlen);
+		    	if (len != filesize){
+		    		printf("ERROR: LEN != FILESIZE (%d != %d)\n", len, filesize);
+		  			printf("Client shutting down...\n");
+		    		return 0;
+		    	}
+		    	fwrite(buffer, 1, len, curfile);
+		    	printf("FILE RECEIVED\n");
+		    	fclose(curfile);
+	    	}
 	    }
 	    /* send the message to the server */
 	    serverlen = sizeof(serveraddr);
