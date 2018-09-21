@@ -150,7 +150,7 @@ int main(int argc, char **argv) {
       }
       filesize = atoi(tmpbfr);
       //filesize=atoi(buf);
-      curfile = fopen(fname, "w");
+      curfile = fopen(fname, "wb");
       if (curfile == NULL) printf("ERROR: FILE NULL\n");
       int received;
       received = recvfrom(sockfd, buf, filesize, 0, &clientaddr, &clientlen);
