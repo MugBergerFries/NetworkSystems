@@ -121,11 +121,11 @@ int main(int argc, char **argv) {
       strncpy(fname, buf+4, 4);
       printf("INPUTTED FILENAME: %s\n", fname);
       curfile = fopen(fname, "r");
+      char sizebuf[4096];
         if (curfile != NULL){
           fseek(curfile, 0L, SEEK_END);
           filesize = ftell(curfile);
           rewind(curfile);
-          char sizebuf[4096];
           sprintf(sizebuf, "%d", filesize);
           n = sendto(sockfd, sizebuf, 4096, 0, &clientaddr, clientlen);
           char tempbuf[filesize];
