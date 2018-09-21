@@ -63,12 +63,11 @@ int main(int argc, char **argv) {
 	    bzero(buf, BUFSIZE);
 	    printf("Please enter msg: ");
 	    fgets(buf, BUFSIZE, stdin);
-	    if (buf=="exit"){
+	    if (buf=="exit\n"){
 	    	off=1;
 	    }
 	    /* send the message to the server */
 	    serverlen = sizeof(serveraddr);
-	    printf("STRLEN: %d\n", strlen(buf));
 	    n = sendto(sockfd, buf, strlen(buf), 0, &serveraddr, serverlen);
 	    if (n < 0) 
 	      error("ERROR in sendto");
