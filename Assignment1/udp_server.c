@@ -142,7 +142,6 @@ int main(int argc, char **argv) {
       printf("INPUTTED FILENAME: %s\n", fname);
       char tmpbfr[4096];
       n = recvfrom(sockfd, tmpbfr, 4096, 0, &clientaddr, &clientlen); //File size
-      if (n < 0) error("ERROR in recvfrom");
       printf("Client sending file...\n");
       if (n < 0){
         error("ERROR in recvfrom");
@@ -152,11 +151,7 @@ int main(int argc, char **argv) {
       filesize = atoi(tmpbfr);
       //filesize=atoi(buf);
       curfile = fopen(fname, "w");
-      for (int i=0;i<3;i++){
-        if (!strcmp(fname, storedfiles[i])){
-
-        }
-      }
+      if (curfile == NULL) printf("ERROR: FILE NULL\n");
       int received;
       received = recvfrom(sockfd, buf, filesize, 0, &clientaddr, &clientlen);
       fwrite(buf, 1, received, curfile);
