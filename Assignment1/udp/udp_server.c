@@ -129,10 +129,12 @@ int main(int argc, char **argv) {
 				filesize = ftello(curfile);
 				rewind(curfile);
 				sprintf(sizebuf, "%d", filesize);
+				printf("Sending file size: %s\n", sizebuf);
 				n = sendto(sockfd, sizebuf, 4096, 0, &clientaddr, clientlen);
 				char *tempbuf = malloc(2*filesize);
 				int temp;
 				temp = fread(tempbuf, 1, filesize, curfile);
+				printf("Sending file: %d\n", temp);
 				n = sendto(sockfd, tempbuf, temp, 0, &clientaddr, clientlen);
 				free(tempbuf);
 			}
