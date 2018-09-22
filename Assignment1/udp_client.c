@@ -82,7 +82,7 @@ int main(int argc, char **argv) {
 			n = sendto(sockfd, buf, strlen(buf), 0, &serveraddr, serverlen);
 			if (n < 0) error("ERROR in sendto");
 			printf("Client requesting file...\n");
-			char tmpbfr[4096];
+			char *tmpbfr = malloc(4096);
 			n = recvfrom(sockfd, tmpbfr, 4096, 0, &serveraddr, &serverlen); //File size
 			printf("Received file size: %s\n", tmpbfr);
 			if (n < 0){
@@ -91,6 +91,7 @@ int main(int argc, char **argv) {
 				return 0;
 			}
 			filesize = atoi(tmpbfr);
+			free(tmpbfr);
 			//filesize=atoi(buf);
 			if (filesize==-1){
 				printf("Server could not locate file\n");
