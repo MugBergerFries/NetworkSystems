@@ -7,9 +7,4 @@ server:
 	gcc -o udp/server udp/udp_server.c
 
 clean:
-	rm -f client
-	rm -f udp/server
-	rm -f udp/foo3
-	rm -f udp/foo2
-	rm -f udp/foo1
-	rm -f udp/.#foo3
+	rm -f client udp/server udp/foo3 udp/foo2 udp/foo1 udp/.#foo3
