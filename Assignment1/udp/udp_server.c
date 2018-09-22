@@ -131,6 +131,7 @@ int main(int argc, char **argv) {
 				sprintf(sizebuf, "%d", filesize);
 				printf("Sending file size: %s\n", sizebuf);
 				n = sendto(sockfd, sizebuf, 4096, 0, &clientaddr, clientlen);
+				sleep(2);
 				char *tempbuf = malloc(2*filesize);
 				int temp;
 				temp = fread(tempbuf, 1, filesize, curfile);
