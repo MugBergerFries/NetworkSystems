@@ -80,11 +80,11 @@ int main(int argc, char **argv) {
 			strncpy(fname, buf+4, 4);
 			printf("INPUTTED FILENAME: %s\n", fname);
 			n = sendto(sockfd, buf, strlen(buf), 0, &serveraddr, serverlen);
-			printf("N IS: %d\n", n);
 			if (n < 0) error("ERROR in sendto");
 			printf("Client requesting file...\n");
 			char tmpbfr[4096];
 			n = recvfrom(sockfd, tmpbfr, 4096, 0, &serveraddr, &serverlen); //File size
+			printf("N IS: %d\n", n);
 			if (n < 0){
 				error("ERROR in recvfrom");
 				printf("Client shutting down...\n");
