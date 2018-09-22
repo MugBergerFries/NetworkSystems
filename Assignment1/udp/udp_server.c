@@ -197,6 +197,10 @@ int main(int argc, char **argv) {
 			}
 			sendto(sockfd, buf, strlen(buf), 0, &clientaddr, clientlen);
 		}
+		else{
+			strcat(buf, ": COMMAND UNRECOGNIZED\n")
+			sendto(sockfd, buf, strlen(buf), 0, &clientaddr, clientlen);
+		}
 		/*if (buf=="exit"){
 			off=1;   
 			n = sendto(sockfd, "Server shutting down...", strlen("Server shutting down..."), 0, 

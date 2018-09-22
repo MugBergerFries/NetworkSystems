@@ -139,6 +139,11 @@ int main(int argc, char **argv) {
 			recvfrom(sockfd, buf, BUFSIZE, 0, &serveraddr, &serverlen);
 			printf("%s\n", buf);
 		}
+		else{
+			n = sendto(sockfd, buf, strlen(buf), 0, &serveraddr, serverlen);
+			recvfrom(sockfd, buf, BUFSIZE, 0, &serveraddr, &serverlen);
+			printf("%s\n", buf);
+		}
 		/* send the message to the server 
 		n = sendto(sockfd, buf, strlen(buf), 0, &serveraddr, serverlen);
 		if (n < 0) 
