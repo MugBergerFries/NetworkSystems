@@ -4,7 +4,7 @@ client:
 	gcc -o client udp_client.c
 
 server:
-	gcc -o server udp_server.c
+	gcc -o server udp/udp_server.c
 
 clean:
-	rm -f client server
+	rm -f client udp/server

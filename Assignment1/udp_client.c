@@ -84,13 +84,13 @@ int main(int argc, char **argv) {
 			printf("Client requesting file...\n");
 			char tmpbfr[4096];
 			n = recvfrom(sockfd, tmpbfr, 4096, 0, &serveraddr, &serverlen); //File size
-			printf("N IS: %d\n", n);
 			if (n < 0){
 				error("ERROR in recvfrom");
 				printf("Client shutting down...\n");
 				return 0;
 			}
 			filesize = atoi(tmpbfr);
+			printf("FILESIZE IS: %d\n", filesize);
 			//filesize=atoi(buf);
 			if (filesize==-1){
 				printf("Server could not locate file\n");
