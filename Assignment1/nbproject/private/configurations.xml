@@ -12,21 +12,15 @@
         <in>pgm2.c</in>
       </df>
       <df name="socket_handout">
-        <in>echoClient.c</in>
-        <in>echoServer.c</in>
       </df>
       <df name="udp">
-        <in>._udp_client.c</in>
         <in>._udp_server.c</in>
-        <in>udp_client.c</in>
         <in>udp_server.c</in>
       </df>
       <in>._udp_client.c</in>
-      <in>._udp_server.c</in>
       <in>echoClient.c</in>
       <in>echoServer.c</in>
       <in>udp_client.c</in>
-      <in>udp_server.c</in>
     </df>
   </logicalFolder>
   <projectmakefile>makefile</projectmakefile>

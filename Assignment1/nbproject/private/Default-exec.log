@@ -1,0 +1,7 @@
+called: C:\MinGW\bin\gcc.exe
+	C:\Users\Sam\Documents\GitHub\NetworkSystems\Assignment1
+	C:\MinGW\bin\gcc.exe
+	-o
+	client
+	udp_client.c
+

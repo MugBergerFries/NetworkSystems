@@ -2,25 +2,6 @@
 <configurationDescriptor version="100">
   <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
     <df root="." name="0">
-      <df name="linux_processes">
-        <in>cube.c</in>
-        <in>master.c</in>
-        <in>sqr.c</in>
-      </df>
-      <df name="pthread_programs">
-        <in>pgm1.c</in>
-        <in>pgm2.c</in>
-      </df>
-      <df name="socket_handout">
-        <in>echoClient.c</in>
-        <in>echoServer.c</in>
-      </df>
-      <df name="udp">
-        <in>._udp_client.c</in>
-        <in>._udp_server.c</in>
-        <in>udp_client.c</in>
-        <in>udp_server.c</in>
-      </df>
       <in>udp_client.c</in>
     </df>
     <logicalFolder name="ExternalFiles"
@@ -50,35 +31,13 @@
           <buildCommandWorkingDir>.</buildCommandWorkingDir>
           <buildCommand>${MAKE} -f makefile</buildCommand>
           <cleanCommand>${MAKE} -f makefile clean</cleanCommand>
-          <executablePath>nbproject\private\tools\localhost\MinGW\gcc.exe</executablePath>
+          <executablePath></executablePath>
         </makeTool>
         <preBuild>
           <preBuildCommandWorkingDir>.</preBuildCommandWorkingDir>
           <preBuildCommand></preBuildCommand>
         </preBuild>
       </makefileType>
-      <item path="linux_processes/cube.c" ex="false" tool="0" flavor2="2">
-      </item>
-      <item path="linux_processes/master.c" ex="false" tool="0" flavor2="2">
-      </item>
-      <item path="linux_processes/sqr.c" ex="false" tool="0" flavor2="2">
-      </item>
-      <item path="pthread_programs/pgm1.c" ex="false" tool="0" flavor2="2">
-      </item>
-      <item path="pthread_programs/pgm2.c" ex="false" tool="0" flavor2="2">
-      </item>
-      <item path="socket_handout/echoClient.c" ex="false" tool="0" flavor2="2">
-      </item>
-      <item path="socket_handout/echoServer.c" ex="false" tool="0" flavor2="2">
-      </item>
-      <item path="udp/._udp_client.c" ex="false" tool="0" flavor2="2">
-      </item>
-      <item path="udp/._udp_server.c" ex="false" tool="0" flavor2="2">
-      </item>
-      <item path="udp/udp_client.c" ex="false" tool="0" flavor2="2">
-      </item>
-      <item path="udp/udp_server.c" ex="false" tool="0" flavor2="2">
-      </item>
       <item path="udp_client.c" ex="false" tool="0" flavor2="0">
       </item>
     </conf>
