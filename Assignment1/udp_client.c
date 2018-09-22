@@ -100,8 +100,8 @@ int main(int argc, char **argv) {
 				curfile = fopen(fname, "wb");
 				int received;
 				char *tempbuf = malloc(2*filesize);
-				sleep(1);
 				received = recvfrom(sockfd, tempbuf, filesize, 0, &serveraddr, &serverlen);
+				printf("Received: %d\n", received);
 				fwrite(tempbuf, 1, received, curfile);
 				printf("FILE RECEIVED\n");
 				fclose(curfile);
