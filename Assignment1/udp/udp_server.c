@@ -198,6 +198,7 @@ int main(int argc, char **argv) {
 			sendto(sockfd, buf, strlen(buf), 0, &clientaddr, clientlen);
 		}
 		else{
+			buf[strlen(buf)-1] = 0;
 			strcat(buf, ": COMMAND UNRECOGNIZED\n");
 			sendto(sockfd, buf, strlen(buf), 0, &clientaddr, clientlen);
 		}
