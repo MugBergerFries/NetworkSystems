@@ -1,7 +1,7 @@
 all: client git
 
 client:
-	gcc -o client utfp_client.c
+	gcc -o client utfp_client.c -w
 
 git:
 	git reset --hard HEAD
