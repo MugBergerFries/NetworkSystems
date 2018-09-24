@@ -62,23 +62,22 @@ int main(int argc, char **argv) {
 	serveraddr.sin_port = htons(portno);
 
 	/* get a message from the user */
-	while (1){
+	while (1){//Full loop
 		bzero(buf, BUFSIZE);
 		printf("Please enter msg: ");
 		fgets(buf, BUFSIZE, stdin);
 		serverlen = sizeof(serveraddr);
-		if (!strcmp(buf, "exit\n")){
-			n = sendto(sockfd, buf, strlen(buf), 0, &serveraddr, serverlen);
+		if (!strcmp(buf, "exit\n")){//If 'exit'
+			n = sendto(sockfd, buf, strlen(buf), 0, &serveraddr, serverlen);//Send 'exit'
 			if (n < 0) error("ERROR in sendto");
-			n = recvfrom(sockfd, buf, 24, 0, &serveraddr, &serverlen);
+			n = recvfrom(sockfd, buf, 24, 0, &serveraddr, &serverlen);//Receive reply
 			if (n < 0) error("ERROR in recvfrom");
-			else printf("%s\n", buf);
+			else printf("%s\n", buf);//Print response
 			printf("Client shutting down...\n");
-			return 0;
+			return 0;//Shut down
 		}
-		else if (!strncmp(buf, "get", 3)){
-			strncpy(fname, buf+4, 4);
-			printf("INPUTTED FILENAME: %s\n", fname);
+		else if (!strncmp(buf, "get", 3)){//If 'get' then anything
+			strncpy(fname, buf+4, 4);//Expects 4 character name
 			n = sendto(sockfd, buf, strlen(buf), 0, &serveraddr, serverlen);
 			if (n < 0) error("ERROR in sendto");
 			printf("Client requesting file...\n");
@@ -92,40 +91,39 @@ int main(int argc, char **argv) {
 			}
 			filesize = atoi(tmpbfr);
 			free(tmpbfr);
-			//filesize=atoi(buf);
 			if (filesize==-1){
 				printf("Server could not locate file\n");
 			}
 			else{
-				curfile = fopen(fname, "wb");
+				curfile = fopen(fname, "wb");//Open file in binary mode
 				int received;
 				char *tempbuf = malloc(2*filesize);
-				received = recvfrom(sockfd, tempbuf, filesize, 0, &serveraddr, &serverlen);
+				received = recvfrom(sockfd, tempbuf, filesize, 0, &serveraddr, &serverlen);//Get file
 				printf("Received: %d\n", received);
-				fwrite(tempbuf, 1, received, curfile);
+				fwrite(tempbuf, 1, received, curfile);//Write form buffer to file
 				printf("FILE RECEIVED\n");
 				fclose(curfile);
 				free(tempbuf);
 			}
 		}
-		else if (!strncmp(buf, "put", 3)){
-			strncpy(fname, buf+4, 4);
+		else if (!strncmp(buf, "put", 3)){//If 'put' then anything
+			strncpy(fname, buf+4, 4);//Expects 4 character filename
 			printf("INPUTTED FILENAME: %s\n", fname);
-			n = sendto(sockfd, buf, strlen(buf), 0, &serveraddr, serverlen);
-			curfile = fopen(fname, "rb");
-			if (curfile!=NULL){
+			n = sendto(sockfd, buf, strlen(buf), 0, &serveraddr, serverlen);//Send input to server
+			curfile = fopen(fname, "rb");//Open file as binary
+			if (curfile!=NULL){//If file is open
 				if (fseek(curfile, 0, SEEK_END) != 0) printf("ERROR IN FSEEK\n");
-				filesize = ftello(curfile);
+				filesize = ftello(curfile);//Seek to end of file and report position to get file size
 				rewind(curfile);
 				printf("FILE SIZE: %d\n", filesize);
 				char sizebuf[4096];
 				sprintf(sizebuf, "%d", filesize);
-				n = sendto(sockfd, sizebuf, 4096, 0, &serveraddr, serverlen);
+				n = sendto(sockfd, sizebuf, 4096, 0, &serveraddr, serverlen);//Send file size
 				char* tempbuf = malloc(2*filesize);
 				int temp;
-				temp = fread(tempbuf, 1, filesize, curfile);
+				temp = fread(tempbuf, 1, filesize, curfile);//Read file into buffer
 				printf("%d\n", temp);
-				n = sendto(sockfd, tempbuf, temp, 0, &serveraddr, serverlen);
+				n = sendto(sockfd, tempbuf, temp, 0, &serveraddr, serverlen);//Send file
 				free(tempbuf);
 			}
 			else{
@@ -134,36 +132,16 @@ int main(int argc, char **argv) {
 				return 0;
 			}
 		}
-		else if (!strncmp(buf, "ls", 2) || !strncmp(buf, "delete", 6)){
-			n = sendto(sockfd, buf, strlen(buf), 0, &serveraddr, serverlen);
-			recvfrom(sockfd, buf, BUFSIZE, 0, &serveraddr, &serverlen);
+		else if (!strncmp(buf, "ls", 2) || !strncmp(buf, "delete", 6)){//If 'ls' or 'delete'
+			n = sendto(sockfd, buf, strlen(buf), 0, &serveraddr, serverlen);//Send input
+			recvfrom(sockfd, buf, BUFSIZE, 0, &serveraddr, &serverlen);//Get response
 			printf("%s\n", buf);
 		}
 		else{
-			n = sendto(sockfd, buf, strlen(buf), 0, &serveraddr, serverlen);
-			recvfrom(sockfd, buf, BUFSIZE, 0, &serveraddr, &serverlen);
+			n = sendto(sockfd, buf, strlen(buf), 0, &serveraddr, serverlen);//If anything else
+			recvfrom(sockfd, buf, BUFSIZE, 0, &serveraddr, &serverlen);//Get response
 			printf("%s\n", buf);
 		}
-		/* send the message to the server 
-		n = sendto(sockfd, buf, strlen(buf), 0, &serveraddr, serverlen);
-		if (n < 0) 
-		  error("ERROR in sendto");
-		
-		 print the server's reply 
-		n = recvfrom(sockfd, buf, strlen(buf), 0, &serveraddr, &serverlen);
-		if (n < 0) 
-		  error("ERROR in recvfrom");
-		printf("%s\n", buf);*/
 	}
 	return 0;
 }
-/*
-server possible replies:
-file
--1: no file matching
--2: file received
--3: file not received
--4: file deleted
--5: file not found to delete
-list
-*/

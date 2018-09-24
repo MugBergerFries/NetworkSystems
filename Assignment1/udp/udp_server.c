@@ -113,37 +113,37 @@ int main(int argc, char **argv) {
 		printf("server received datagram from %s (%s)\n", 
 		 hostp->h_name, hostaddrp);
 		printf("server received %d/%d bytes: %s\n", strlen(buf), n, buf);
-		if (!strcmp(buf, "exit\n")){
+		if (!strcmp(buf, "exit\n")){ //If the user types exit
 			n = sendto(sockfd, "Server shutting down...", strlen("Server shutting down..."), 0, 
-				 (struct sockaddr *) &clientaddr, clientlen);
+				 (struct sockaddr *) &clientaddr, clientlen);//Send success
 			if (n < 0) error("ERROR in sendto");
-			return 0;
+			return 0; //Shut down server
 		}
-		else if (!strncmp(buf, "get", 3)){
-			strncpy(fname, buf+4, 4);
+		else if (!strncmp(buf, "get", 3)){ //If the user types get and then anything
+			strncpy(fname, buf+4, 4); //Expects filename of size 4 (foox)
 			printf("INPUTTED FILENAME: %s\n", fname);
-			curfile = fopen(fname, "rb");
+			curfile = fopen(fname, "rb"); //Open file in binary mode
 			char sizebuf[4096];
 			if (curfile != NULL){
-				fseeko(curfile, 0, SEEK_END);
+				fseeko(curfile, 0, SEEK_END); //Seek to end of file, get the position, make point back to start (To get file size)
 				filesize = ftello(curfile);
 				rewind(curfile);
 				sprintf(sizebuf, "%d", filesize);
 				printf("Sending file size: %s - %d\n", sizebuf, strlen(sizebuf));
-				n = sendto(sockfd, sizebuf, 4096, 0, &clientaddr, clientlen);
+				n = sendto(sockfd, sizebuf, 4096, 0, &clientaddr, clientlen);//Send size of file so client knows how much to receive
 				char *tempbuf = malloc(2*filesize);
 				int temp;
-				temp = fread(tempbuf, 1, filesize, curfile);
+				temp = fread(tempbuf, 1, filesize, curfile); //Read file into buffer
 				printf("Sending file: %d\n", temp);
-				n = sendto(sockfd, tempbuf, temp, 0, &clientaddr, clientlen);
+				n = sendto(sockfd, tempbuf, temp, 0, &clientaddr, clientlen); //Send file
 				free(tempbuf);
 			}
 			else{
-				sprintf(sizebuf, "%d", -1);
+				sprintf(sizebuf, "%d", -1); //If file not found, send error code
 				n = sendto(sockfd, sizebuf, 4096, 0, &clientaddr, clientlen);
 			}
 		}
-		else if (!strncmp(buf, "put", 3)){
+		else if (!strncmp(buf, "put", 3)){//If the user types put and then anything
 			strncpy(fname, buf+4, 4);
 			printf("INPUTTED FILENAME: %s\n", fname);
 			char tmpbfr[4096];
@@ -155,11 +155,11 @@ int main(int argc, char **argv) {
 				return 0;
 			}
 			filesize = atoi(tmpbfr);
-			curfile = fopen(fname, "wb");
+			curfile = fopen(fname, "wb"); //open file
 			if (curfile == NULL) printf("ERROR: FILE NULL\n");
 			int received;
 			char *tempbuf = malloc(2*filesize);
-			received = recvfrom(sockfd, tempbuf, filesize, 0, &clientaddr, &clientlen);
+			received = recvfrom(sockfd, tempbuf, filesize, 0, &clientaddr, &clientlen); //Get file
 			if (errno==EFAULT){
 				printf("SLIM SHADY\n");
 			}
@@ -167,57 +167,39 @@ int main(int argc, char **argv) {
 				printf("ACHTUNG\n");
 			}
 			printf("RECEIVED: %d\n", received);
-			fwrite(tempbuf, 1, received, curfile);
+			fwrite(tempbuf, 1, received, curfile);//Write to file
 			printf("FILE RECEIVED\n");
 			fclose(curfile);
 			free(tempbuf);
 		}
-		else if (!strncmp(buf, "ls", 2)){
-			struct dirent *dire;
-			DIR *dirp = opendir(".");
+		else if (!strncmp(buf, "ls", 2)){//If user types ls
+			struct dirent *dire; //Struct from dirent package to simulate ls
+			DIR *dirp = opendir(".");//Open current directory
 			if (dirp == NULL){
 				printf("Could not open directory\n");
 				return 0;
 			}
-			while ((dire = readdir(dirp)) != NULL){
+			while ((dire = readdir(dirp)) != NULL){//Make a string of all things in dir
 				strcat(buf, dire->d_name);
 				strcat(buf, " - ");
 			}
-			sendto(sockfd, buf, strlen(buf), 0, &clientaddr, clientlen);
+			sendto(sockfd, buf, strlen(buf), 0, &clientaddr, clientlen);//Send list back
 			closedir(dirp);
-			printf("%s\n", buf);
 		}
-		else if (!strncmp(buf, "delete", 6)){
+		else if (!strncmp(buf, "delete", 6)){//If user types delete and then anything
 			strncpy(fname, buf+7, 4);
-			int stat = remove(fname);
+			int stat = remove(fname);//Delete the file (expects 4 characters)
 			if (stat == 0){
 				sprintf(buf, "%s", "File deleted successfully\n");
 			} else {
 				sprintf(buf, "%s", "Error: unable to locate the file\n");
 			}
-			sendto(sockfd, buf, strlen(buf), 0, &clientaddr, clientlen);
+			sendto(sockfd, buf, strlen(buf), 0, &clientaddr, clientlen);//Send success/fail
 		}
-		else{
-			buf[strlen(buf)-1] = 0;
-			strcat(buf, ": COMMAND UNRECOGNIZED\n");
-			sendto(sockfd, buf, strlen(buf), 0, &clientaddr, clientlen);
+		else{//If unknown command
+			buf[strlen(buf)-1] = 0;//Make newline at the end a null character
+			strcat(buf, ": COMMAND UNRECOGNIZED\n");//Make error string
+			sendto(sockfd, buf, strlen(buf), 0, &clientaddr, clientlen);//Send it
 		}
-		/*if (buf=="exit"){
-			off=1;   
-			n = sendto(sockfd, "Server shutting down...", strlen("Server shutting down..."), 0, 
-				 (struct sockaddr *) &clientaddr, clientlen);
-			if (n < 0) error("ERROR in sendto");
-		}*/
-
 	}
 }
-/*
-server possible replies:
-file
--1: no file matching
--2: file received
--3: file not received
--4: file deleted
--5: file not found to delete
-list
-*/
