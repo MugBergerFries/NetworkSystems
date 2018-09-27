@@ -1,0 +1,33 @@
+hostnames can map to multiple IP addresses
+map to different addresses in different places.
+	Nearby copy of the site instead of original
+Multiple hostnames for same IP
+Three Identifiers: Hostname, IP, MAC
+	IP: Appreciated by routers, based on location, heirarchichal, 32 bits
+	MAC: Appreciated within LAN, Unique, hard-coded in the adapter, Flat name space of 48 bits
+
+DNS: Given a host, provide IP; Given iP, give host
+DHCP: Given MAC, assign unique IP; And tell host other LAN info; keep all info to send packets
+ARP: Learn mapping between IPs and interface addresses
+
+Key ideas in DHCP and ARP
+	Broadcasting (ask by broadcasting)
+	Caching (Store info for a bit)
+	Soft state (forget after a while)
+
+When device is connected to network, it has no IP and doesn't know how to get it
+	Broadcast to discover a server who can help
+		Broadcast a DHCP server-discovery message
+		Server sends a DHCP "offer" message
+	Special destination address for the broadcast: FF-FF-FF-FF-FF-FF
+	All adapters on the LAN get it
+	Response from DHCP server
+		"offer message" Propose IP, mask, gateway, DNS server, etc
+		Lease time (how long the above is valid)
+	Multiple servers may respond
+		Client can decide between offers
+	Client sends a DHCP request broadcasted for the desired offer
+	Server sends a DHCP ACK to confirm
+Computers usually release their IP on shutdown (ipconfig/release)
+Sometimes they don't (crashes)
+Every node maintains an ARP table: (IP/MAC pair)
