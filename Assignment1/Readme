@@ -1,5 +1,5 @@
 This program includes a utfp_client.c and utfp_server.c file, which allow the client to push and pull file to and from the server
-Commands:
+Client Commands:
 	put *filename*: Sends a file from the client directory to the server
 	get *filename*: Get a file from the server directory
 	ls: list all files and subdirectories in the server directory
