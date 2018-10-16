@@ -6,7 +6,8 @@
 
 int main(int argc, char *argv[]){
 	struct sockaddr_in server, client;
-	int sock;
+	int sock, insize;
+	char messagein[5000];
 	sock = socket(AF_INET, SOCK_STREAM, 0);
 	server.sin_family = AF_INET;
 	server.sin_addr.s_addr = INADDR_ANY;
@@ -40,7 +41,8 @@ int main(int argc, char *argv[]){
 			waitpid(-1, &wstatus, WNOHANG);//Check if any process has finished, but don't hang
 		}
 		else{ //We're the child process
-			
+			insize = recv(accepted, messagein, 5000, 0;
+			printf("%s\n", messagein);
 		}
 	}
 }
