@@ -13,7 +13,7 @@ int main(int argc, char *argv[]){
 	sock = socket(AF_INET, SOCK_STREAM, 0);
 	server.sin_family = AF_INET;
 	server.sin_addr.s_addr = INADDR_ANY;
-	server.sin_port = htons(argv[1]);
+	server.sin_port = htons(*argv[1]);
 	if(bind(sock, (struct sockaddr*)&server, sizeof(server))==-1){
 		perror("ERROR: Bind failed");
 		return 1;
@@ -26,7 +26,7 @@ int main(int argc, char *argv[]){
 	puts("SUCCESS: Listen complete");
 	int pid = -1;
 	int accepted, wstatus;
-	while {
+	while (true){
 		accepted = accept(sock, (struct sockaddr*)&client, sizeof(client));
 		if (accepted<0){
 			perror("ERROR: Accept failed");
