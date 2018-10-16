@@ -56,6 +56,7 @@ int main(int argc, char *argv[]){
 			method = getline(messagein, method, ' ');
 			if (method=="GET"){
 				printf("%s\n", "WE DID IT REDDIT\n");
+				close(sock);
 			}
 			else if (method=="POST"){
 				puts("ERROR: Post not supported");
