@@ -29,7 +29,7 @@ int main(int argc, char *argv[]){
 	int pid = -1;
 	int accepted, wstatus;
 	while (1){
-		accepted = accept(sock, (struct sockaddr*)&client, sizeof(client));
+		accepted = accept(sock, (struct sockaddr*)&client, (socklen_t*)&sizeof(client));
 		if (accepted<0){
 			perror("ERROR: Accept failed");
 			return 1;
