@@ -43,7 +43,9 @@ int main(int argc, char *argv[]){
 		}
 		puts("SUCCESS: Fork complete");
 		if (pid>0){ //We're the parent process, pid is child's pid
-			waitpid(-1, &wstatus, WNOHANG);//Check if any process has finished, but don't hang
+			if (!!waitpid(-1, &wstatus, WNOHANG)){//Check if any process has finished, but don't hang
+				puts("SUCCESS: A child returned");
+			}
 		}
 		else{ //We're the child process
 			insize = recv(accepted, messagein, 5000, 0);
