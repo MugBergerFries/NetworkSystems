@@ -55,7 +55,7 @@ int main(int argc, char *argv[]){
 			printf("MESSAGEIN: %s\n", messagein);
 			string method, path, vers;
 			method = getline(messagein, method, ' ');
-			printf("METHOD: %s\n", method);
+			cout<<"METHOD: "<<method<<endl;
 			if (method=="GET"){
 				printf("%s\n", "WE DID IT REDDIT\n");
 				close(sock);
