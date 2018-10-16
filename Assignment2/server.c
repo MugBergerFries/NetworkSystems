@@ -6,6 +6,6 @@
 
 int main(int argc, char *argv[]){
 	for (;;){
-		printf("%s". "Newline\n");
+		printf("%s", "Newline\n");
 	}
 }
