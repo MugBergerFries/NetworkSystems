@@ -9,7 +9,7 @@
 
 int main(int argc, char *argv[]){
 	struct sockaddr_in server, client;
-	int sock, insize, port;
+	int sock, insize, port, socksize;
 	char messagein[5000];
 	sock = socket(AF_INET, SOCK_STREAM, 0);
 	server.sin_family = AF_INET;
@@ -29,7 +29,8 @@ int main(int argc, char *argv[]){
 	int pid = -1;
 	int accepted, wstatus;
 	while (1){
-		accepted = accept(sock, (struct sockaddr*)&client, (socklen_t*)&sizeof(client));
+		socksize = sizeof(client);
+		accepted = accept(sock, (struct sockaddr*)&client, (socklen_t*)&socksize);
 		if (accepted<0){
 			perror("ERROR: Accept failed");
 			return 1;
