@@ -26,7 +26,7 @@ int main(int argc, char *argv[]){
 	puts("SUCCESS: Listen complete");
 	int pid = -1;
 	int accepted, wstatus;
-	while (true){
+	while (1){
 		accepted = accept(sock, (struct sockaddr*)&client, sizeof(client));
 		if (accepted<0){
 			perror("ERROR: Accept failed");
