@@ -55,7 +55,7 @@ int main(int argc, char *argv[]){
 			string method, path, vers;
 			method = getline(messagein, method, ' ');
 			if (method=="GET"){
-
+				printf("%s\n", "WE DID IT REDDIT\n");
 			}
 			else if (method=="POST"){
 				puts("ERROR: Post not supported");
