@@ -7,6 +7,8 @@
 #include<sys/wait.h>
 #include<stdlib.h>
 
+using namespace std;
+
 int main(int argc, char *argv[]){
 	struct sockaddr_in server, client;
 	int sock, insize, port, socksize;
@@ -50,6 +52,23 @@ int main(int argc, char *argv[]){
 		else{ //We're the child process
 			insize = recv(accepted, messagein, 5000, 0);
 			printf("%s\n", messagein);
+			string method, path, vers;
+			method = getline(messagein, method, ' ');
+			if (method=="GET"){
+
+			}
+			else if (method=="POST"){
+				puts("ERROR: Post not supported");
+				return 1;
+			}
+			else if (method=="HEAD"){
+				puts("ERROR: Head not supported");
+				return 1;
+			}
+			else{
+				puts("ERROR: Unknown request method '%s'", method);
+				return 1;
+			}
 			return 0;
 		}
 	}
