@@ -13,7 +13,6 @@ int main(int argc, char *argv[]){
 	sock = socket(AF_INET, SOCK_STREAM, 0);
 	server.sin_family = AF_INET;
 	server.sin_addr.s_addr = INADDR_ANY;
-	printf("%s\n", argv[1]);
 	server.sin_port = htons(argv[1]);
 	if(bind(sock, (struct sockaddr*)&server, sizeof(server))==-1){
 		perror("ERROR: Bind failed");
