@@ -3,6 +3,8 @@
 #include<sys/socket.h>
 #include<arpa/inet.h>
 #include<unistd.h>
+#include<sys/types.h>
+#include<sys/wait.h>
 
 int main(int argc, char *argv[]){
 	struct sockaddr_in server, client;
@@ -41,7 +43,7 @@ int main(int argc, char *argv[]){
 			waitpid(-1, &wstatus, WNOHANG);//Check if any process has finished, but don't hang
 		}
 		else{ //We're the child process
-			insize = recv(accepted, messagein, 5000, 0;
+			insize = recv(accepted, messagein, 5000, 0);
 			printf("%s\n", messagein);
 		}
 	}
