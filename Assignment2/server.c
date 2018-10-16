@@ -51,9 +51,10 @@ int main(int argc, char *argv[]){
 		}
 		else{ //We're the child process
 			insize = recv(accepted, messagein, 5000, 0);
-			printf("%s\n", messagein);
+			printf("MESSAGEIN: %s\n", messagein);
 			string method, path, vers;
 			method = getline(messagein, method, ' ');
+			printf("METHOD: %s\n", method);
 			if (method=="GET"){
 				printf("%s\n", "WE DID IT REDDIT\n");
 				close(sock);
