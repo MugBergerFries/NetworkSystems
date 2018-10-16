@@ -7,12 +7,10 @@
 #include<sys/wait.h>
 #include<stdlib.h>
 
-using namespace std;
-
 int main(int argc, char *argv[]){
 	struct sockaddr_in server, client;
 	int sock, insize, port, socksize;
-	string messagein;
+	char messagein[5000];
 	sock = socket(AF_INET, SOCK_STREAM, 0);
 	server.sin_family = AF_INET;
 	server.sin_addr.s_addr = INADDR_ANY;
@@ -51,26 +49,7 @@ int main(int argc, char *argv[]){
 		}
 		else{ //We're the child process
 			insize = recv(accepted, messagein, 5000, 0);
-			printf("MESSAGEIN: %s\n", messagein);
-			string method, path, vers;
-			method = getline(messagein, method, ' ');
-			printf("METHOD: %s\n", method);
-			if (method=="GET"){
-				printf("%s\n", "WE DID IT REDDIT\n");
-				close(sock);
-			}
-			else if (method=="POST"){
-				puts("ERROR: Post not supported");
-				return 1;
-			}
-			else if (method=="HEAD"){
-				puts("ERROR: Head not supported");
-				return 1;
-			}
-			else{
-				puts("ERROR: Unknown request method '%s'", method);
-				return 1;
-			}
+			printf("%s\n", messagein);
 			return 0;
 		}
 	}
