@@ -60,7 +60,7 @@ int main(int argc, char *argv[]){
 			close(sock);//Close the parent's connection
 			messagein = (char*)malloc(100000);//Allocate memory for the incoming message
 			recv(accepted, messagein, 100000, 0);//Receive the message
-			cout<<"\nRECEIVED MESSAGE BEGIN\n"<<messagein<<endl<<"RECEIVED MESSAGE END\n\n";
+			cout<<"\nRECEIVED MESSAGE BEGIN\n\n"<<messagein<<"RECEIVED MESSAGE END\n\n";
 			char * med;//Middleman to parse message
 			med = strtok(messagein, " ");//Get message until first " "
 			string method, path, vers;
@@ -93,7 +93,7 @@ int main(int argc, char *argv[]){
 						return 1;
 					}
 					else{
-						perror("ERROR: fopen failed");
+						perror("ERROR: index file", path);
 						char fileout[5000] = "HTTP/1.1 500 Internal Server Error";
 						write(accepted, fileout, strlen(fileout));
 						close(accepted);
@@ -157,7 +157,7 @@ int main(int argc, char *argv[]){
 						return 1;
 					}
 					else{
-						perror("ERROR: fopen failed");
+						perror("ERROR: failed to open %s", abspath);
 						char fileout[38] = "HTTP/1.1 500 Internal Server Error";
 						write(accepted, fileout, 38);
 						close(accepted);
