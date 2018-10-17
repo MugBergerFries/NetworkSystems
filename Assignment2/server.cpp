@@ -51,6 +51,7 @@ int main(int argc, char *argv[]){
 			return 1;
 		}
 		if (pid>0){ //We're the parent process, pid is child's pid
+			close(accepted);
 			if (!!waitpid(-1, &wstatus, WNOHANG)){//Check if any process has finished, but don't hang
 				puts("SUCCESS: A child returned");
 			}
