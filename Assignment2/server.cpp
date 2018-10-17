@@ -97,8 +97,10 @@ int main(int argc, char *argv[]){
 					}
 				}
 				else{
-					cout<<"DEBUG: "<<path.c_str()<<endl;
-					curfile = fopen(path.c_str(), "rb");
+					char* abspath = new char[strlen(path)+2];
+					strcpy(abspath, ".");
+					strcat(abspath, path.c_str());
+					curfile = fopen(abspath, "rb");
 					if (curfile!=NULL){//If file is open
 						if (fseek(curfile, 0, SEEK_END) != 0) perror("ERROR: Fseek failed");
 						filesize = ftello(curfile);//Seek to end of file and report position to get file size
