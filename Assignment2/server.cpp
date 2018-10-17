@@ -98,9 +98,10 @@ int main(int argc, char *argv[]){
 				}
 				else{
 					char* abspath = new char [path.length()];
+					char* pathcstr = path.c_str();
 					for (int i=0;i<path.length();i++){
 						cout<<"next: "<<path[i++]<<endl;
-						abspath[i]=path[i++];
+						abspath[i]=pathcstr[i++];
 					}
 					cout<<"DEBUG: "<<path<<endl;
 					curfile = fopen(abspath, "rb");
