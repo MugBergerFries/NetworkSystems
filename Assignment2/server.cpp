@@ -136,6 +136,7 @@ int main(int argc, char *argv[]){
 						strcat(fileout, tempbuf);
 						strcat(fileout, "\0");
 						cout<<"DEBUG2: "<<temp<<" - "<<strlen(fileout)<<endl;
+						cout<<"DEBUG3: "<<fileout<<endl;
 						write(accepted, fileout, strlen(fileout));
 						free(tempbuf);
 					}
