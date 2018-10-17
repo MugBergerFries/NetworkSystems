@@ -138,7 +138,6 @@ int main(int argc, char *argv[]){
 						cout<<"test2: "<<strlen(fileout)<<endl;
 						strcat(fileout, "\0");
 						cout<<"DEBUG2: "<<temp<<" - "<<sizeof(fileout)<<endl;
-						cout<<"DEBUG3: "<<fileout<<endl;
 						write(accepted, fileout, sizeof(fileout)-1);
 						free(tempbuf);
 					}
