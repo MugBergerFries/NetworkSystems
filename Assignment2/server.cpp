@@ -74,7 +74,7 @@ int main(int argc, char *argv[]){
 				return 1;
 			}
 			else{
-				cout<<("ERROR: Unknown request method '%s'\n", method);
+				cout<<"ERROR: Unknown request method '"<<method<<"'\n";
 				return 1;
 			}
 			return 0;
