@@ -145,6 +145,7 @@ int main(int argc, char *argv[]){
 						write(accepted, fileout, sizeof(fileout)-1);
 						free(tempbuf);
 						close(accepted);
+						return 1;
 					}
 					else{
 						perror("ERROR: fopen failed");
