@@ -112,6 +112,7 @@ int main(int argc, char *argv[]){
 						char* tempbuf = (char*)malloc(filesize);
 						int temp;
 						temp = fread(tempbuf, 1, filesize, curfile);//Read file into buffer
+						cout<<tempbuf<<endl;
 						char sizebuf[sizeof(int)];
 						sprintf(sizebuf, "%d", filesize);
 						char* med2;
