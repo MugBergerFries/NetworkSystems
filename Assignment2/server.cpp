@@ -104,7 +104,7 @@ int main(int argc, char *argv[]){
 					strcpy(abspath, "www");
 					strcat(abspath, pathcstr);
 					cout<<"DEBUG: "<<abspath<<endl;
-					curfile = fopen(abspath, "r");
+					curfile = fopen(abspath, "rb");
 					if (curfile!=NULL){//If file is open
 						if (fseek(curfile, 0, SEEK_END) != 0) perror("ERROR: Fseek failed");
 						filesize = ftello(curfile);//Seek to end of file and report position to get file size
