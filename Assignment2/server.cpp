@@ -141,7 +141,8 @@ int main(int argc, char *argv[]){
 						strcat(fileout, tempbuf);
 						//strcat(fileout, "\0");
 						cout<<"DEBUG2: "<<temp<<" - "<<sizeof(fileout)<<endl;
-						write(accepted, fileout, sizeof(fileout));
+						int sent = write(accepted, fileout, sizeof(fileout));
+						cout<<"SENT "<<sent<<endl;
 						free(tempbuf);
 						shutdown(accepted, SHUT_WR);
 						while (recv(accepted, messagein, 100000, 0)!=0){}
@@ -151,7 +152,8 @@ int main(int argc, char *argv[]){
 					else{
 						perror("ERROR: fopen failed");
 						char fileout[38] = "HTTP/1.1 500 Internal Server Error";
-						write(accepted, fileout, 38);
+						int sent = write(accepted, fileout, 38);
+						cout<<"SENT "<<sent<<endl;
 						cout<<"Server error sent"<<endl;
 						close(accepted);
 						return 1;
