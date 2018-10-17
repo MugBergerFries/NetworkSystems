@@ -14,7 +14,7 @@ using namespace std;
 int main(int argc, char *argv[]){
 	struct sockaddr_in server, client;
 	int sock, insize, port, socksize, filesize;
-	char *messagein;
+	const char *messagein;
 	sock = socket(AF_INET, SOCK_STREAM, 0);
 	server.sin_family = AF_INET;
 	server.sin_addr.s_addr = INADDR_ANY;
@@ -80,7 +80,7 @@ int main(int argc, char *argv[]){
 						strcat(messagein, sizebuf);
 						strcat(messagein, "\r\n\r\n");
 						strcat(messagein, tempbuf);
-						strcat(messagein, '\0');
+						strcat(messagein, "\0");
 						cout<<"DEBUG2: "<<messagein<<endl;
 						write(accepted, messagein, strlen(messagein));
 					}
