@@ -98,7 +98,7 @@ int main(int argc, char *argv[]){
 				}
 				else{
 					char* abspath = new char[path.length()];
-					strcat(abspath, (&path.c_str())+1);
+					strcpy(abspath, (&path.c_str())+1);
 					cout<<"ERROR: "<<abspath<<endl;
 					curfile = fopen(abspath, "rb");
 					if (curfile!=NULL){//If file is open
