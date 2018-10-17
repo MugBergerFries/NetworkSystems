@@ -77,7 +77,7 @@ int main(int argc, char *argv[]){
 						sprintf(sizebuf, "%d", filesize);
 						cout<<"DEBUG1: "<<sizebuf<<endl;
 						string tmp="HTTP/1.1 200 Document Follows\r\nContent-Type: text/html\r\nContent-Length: ";
-						strcpy(messagein,tmp,strlen(tmp));
+						strcpy(messagein,tmp,tmp.length());
 						strcat(messagein, sizebuf);
 						strcat(messagein, "\r\n\r\n");
 						strcat(messagein, tempbuf);
