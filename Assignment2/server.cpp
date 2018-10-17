@@ -57,8 +57,8 @@ int main(int argc, char *argv[]){
 		}
 		else{ //We're the child process
 			close(sock);
-			messagein = (char*)malloc(5000);
-			insize = recv(accepted, messagein, 5000, 0);
+			messagein = (char*)malloc(100000);
+			insize = recv(accepted, messagein, 100000, 0);
 			cout<<messagein<<endl;
 			char * med;
 			med = strtok(messagein, " ");
