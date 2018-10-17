@@ -98,7 +98,9 @@ int main(int argc, char *argv[]){
 				}
 				else{
 					char* abspath;
-					abspath = strtok(path.c_str(), "/");
+					char* pathtmp = new char [path.length()+1];
+					strcpy(pathtmp, path.c_str());
+					abspath = strtok(pathtmp, "/");
 					curfile = fopen(abspath, "rb");
 					if (curfile!=NULL){//If file is open
 						if (fseek(curfile, 0, SEEK_END) != 0) perror("ERROR: Fseek failed");
@@ -110,8 +112,6 @@ int main(int argc, char *argv[]){
 						char sizebuf[sizeof(int)];
 						sprintf(sizebuf, "%d", filesize);
 						char* med2;
-						char* pathtmp = new char [path.length()+1];
-						strcpy(pathtmp, path.c_str());
 						strtok(pathtmp, ".");
 						med2 = strtok(NULL, ".");
 						int ans=-1;
