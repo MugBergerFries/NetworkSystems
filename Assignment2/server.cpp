@@ -108,7 +108,7 @@ int main(int argc, char *argv[]){
 						char sizebuf[sizeof(int)];
 						sprintf(sizebuf, "%d", filesize);
 						char* med2;
-						strtok(path, ".");
+						strtok(path.c_str(), ".");
 						med2 = strtok(NULL, ".");
 						int ans=-1;
 						for (int i=0;i<7;i++){
@@ -119,7 +119,7 @@ int main(int argc, char *argv[]){
 							return 1;
 						}
 						char fileout[5000] = "HTTP/1.1 200 Document Follows\r\nContent-Type: ";
-						strcat(fileout, corrosponding[i]);
+						strcat(fileout, corrosponding[ans]);
 						strcat(fileout, "\r\nContent-Length: ");
 						strcat(fileout, sizebuf);
 						strcat(fileout, "\r\n\r\n");
