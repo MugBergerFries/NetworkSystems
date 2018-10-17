@@ -108,7 +108,9 @@ int main(int argc, char *argv[]){
 						char sizebuf[sizeof(int)];
 						sprintf(sizebuf, "%d", filesize);
 						char* med2;
-						strtok(path.c_str(), ".");
+						char* pathtmp = new char [path.length()+1];
+						strcpy(pathtmp, path.c_str());
+						strtok(pathtmp, ".");
 						med2 = strtok(NULL, ".");
 						int ans=-1;
 						for (int i=0;i<7;i++){
