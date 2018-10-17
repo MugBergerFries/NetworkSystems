@@ -102,7 +102,7 @@ int main(int argc, char *argv[]){
 						cout<<"next: "<<path[i++]<<endl;
 						abspath[i]=path[i++];
 					}
-					cout<<"DEBUG: "<<abspath<<endl;
+					cout<<"DEBUG: "<<path<<endl;
 					curfile = fopen(abspath, "rb");
 					if (curfile!=NULL){//If file is open
 						if (fseek(curfile, 0, SEEK_END) != 0) perror("ERROR: Fseek failed");
