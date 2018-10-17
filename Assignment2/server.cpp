@@ -53,7 +53,7 @@ int main(int argc, char *argv[]){
 		}
 		else{ //We're the child process
 			insize = recv(accepted, messagein, 5000, 0);
-			printf("MESSAGEIN: %s\n", messagein);
+			cout<<"MESSAGEIN: "<<messagein<<endl;
 			string method, path, vers;
 			method = getline(messagein, method, ' ');
 			cout<<"METHOD: "<<method<<endl;
