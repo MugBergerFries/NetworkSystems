@@ -97,6 +97,7 @@ int main(int argc, char *argv[]){
 					}
 				}
 				else{
+					cout<<"DEBUG: "<<path.c_str()<<endl;
 					curfile = fopen(path.c_str(), "rb");
 					if (curfile!=NULL){//If file is open
 						if (fseek(curfile, 0, SEEK_END) != 0) perror("ERROR: Fseek failed");
