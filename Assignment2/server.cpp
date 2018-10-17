@@ -75,12 +75,11 @@ int main(int argc, char *argv[]){
 						temp = fread(tempbuf, 1, filesize, curfile);//Read file into buffer
 						char sizebuf[sizeof(int)];
 						sprintf(sizebuf, "%d", filesize);
-						char *fileout = (char*)"HTTP/1.1 200 Document Follows\r\nContent-Type: text/html\r\nContent-Length: ";
-						cout<<"DEBUG1: "<<fileout<<endl;
+						char fileout[5000] = "HTTP/1.1 200 Document Follows\r\nContent-Type: text/html\r\nContent-Length: ";
 						strcat(fileout, sizebuf);
 						strcat(fileout, "\r\n\r\n");
 						strcat(fileout, tempbuf);
-						//strcat(fileout, "\0");
+						strcat(fileout, "\0");
 						cout<<"DEBUG2: "<<fileout<<endl;
 						write(accepted, fileout, strlen(fileout));
 					}
