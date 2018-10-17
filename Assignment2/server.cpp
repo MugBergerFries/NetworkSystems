@@ -76,14 +76,13 @@ int main(int argc, char *argv[]){
 						char sizebuf[sizeof(int)];
 						sprintf(sizebuf, "%d", filesize);
 						cout<<"DEBUG1: "<<sizebuf<<endl;
-						string tmp="HTTP/1.1 200 Document Follows\r\nContent-Type: text/html\r\nContent-Length: ";
-						strcpy(messagein,tmp,tmp.length());
-						strcat(messagein, sizebuf);
-						strcat(messagein, "\r\n\r\n");
-						strcat(messagein, tempbuf);
-						strcat(messagein, "\0");
-						cout<<"DEBUG2: "<<messagein<<endl;
-						write(accepted, messagein, strlen(messagein));
+						char *fileout = "HTTP/1.1 200 Document Follows\r\nContent-Type: text/html\r\nContent-Length: ";
+						strcat(fileout, sizebuf);
+						strcat(fileout, "\r\n\r\n");
+						strcat(fileout, tempbuf);
+						strcat(fileout, "\0");
+						cout<<"DEBUG2: "<<fileout<<endl;
+						write(accepted, fileout, strlen(fileout));
 					}
 					else{
 						perror("ERROR: fopen failed");
