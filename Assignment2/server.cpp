@@ -83,6 +83,9 @@ int main(int argc, char *argv[]){
 						strcat(messagein, '\0');
 						write(accepted, messagein, strlen(messagein));
 					}
+					else{
+						perror("ERROR: fopen failed");
+					}
 				}
 				close(sock);
 			}
