@@ -149,8 +149,8 @@ int main(int argc, char *argv[]){
 					}
 					else{
 						perror("ERROR: fopen failed");
-						char fileout[5000] = "HTTP/1.1 500 Internal Server Error";
-						write(accepted, fileout, strlen(fileout));
+						char fileout[38] = "HTTP/1.1 500 Internal Server Error";
+						write(accepted, fileout, 38);
 						close(accepted);
 						return 1;
 					}
