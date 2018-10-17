@@ -108,10 +108,10 @@ int main(int argc, char *argv[]){
 					if (curfile!=NULL){//If file is open
 						if (fseek(curfile, 0, SEEK_END) != 0) perror("ERROR: Fseek failed");
 						filesize = ftello(curfile);//Seek to end of file and report position to get file size
+						rewind(curfile);
 						char* tempbuf = (char*)malloc(filesize);
 						int temp;
 						temp = fread(tempbuf, 1, filesize, curfile);//Read file into buffer
-						rewind(curfile);
 						FILE* outtest;
 						outtest = fopen("outlog.txt", "wb");
 						fwrite(tempbuf, sizeof(char), temp, outtest);
