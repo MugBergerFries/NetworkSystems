@@ -12,8 +12,8 @@
 using namespace std;
 
 int main(int argc, char *argv[]){
-	char types[7][5] = {"html", "txt", "png", "gif", "jpg", "css", "js"}
-	char corrosponding[7][23] = {"text/html", "text/plain", "image/png", "image/gif", "image/jpg", "text/css", "application/javascript"}
+	char types[7][5] = {"html", "txt", "png", "gif", "jpg", "css", "js"};
+	char corrosponding[7][23] = {"text/html", "text/plain", "image/png", "image/gif", "image/jpg", "text/css", "application/javascript"};
 	struct sockaddr_in server, client;
 	int sock, insize, port, socksize, filesize;
 	char *messagein;
