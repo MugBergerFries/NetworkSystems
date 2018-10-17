@@ -44,6 +44,8 @@ int main(int argc, char *argv[]){
 		pid=fork();
 		if (pid==-1){
 			perror("ERROR: Fork failed");
+			char fileout[5000] = "HTTP/1.1 500 Internal Server Error";
+			write(accepted, fileout, strlen(fileout));
 			return 1;
 		}
 		puts("SUCCESS: Fork complete");
@@ -83,6 +85,36 @@ int main(int argc, char *argv[]){
 						strcat(fileout, "\0");
 						cout<<"DEBUG2: "<<temp<<endl;
 						write(accepted, fileout, strlen(fileout));
+						free(tempbuf);
+					}
+					else{
+						perror("ERROR: fopen failed");
+						char fileout[5000] = "HTTP/1.1 500 Internal Server Error";
+						write(accepted, fileout, strlen(fileout));
+						return 1;
+					}
+				}
+				else{
+					curfile = fopen(path, "rb");
+					if (curfile!=NULL){//If file is open
+						if (fseek(curfile, 0, SEEK_END) != 0) perror("ERROR: Fseek failed");
+						filesize = ftello(curfile);//Seek to end of file and report position to get file size
+						rewind(curfile);
+						char* tempbuf = (char*)malloc(filesize);
+						int temp;
+						temp = fread(tempbuf, 1, filesize, curfile);//Read file into buffer
+						char sizebuf[sizeof(int)];
+						sprintf(sizebuf, "%d", filesize);
+						char fileout[5000] = "HTTP/1.1 200 Document Follows\r\nContent-Type: ";
+						strcat(fileout, );
+						strcat(fileout, "\r\nContent-Length: ");
+						strcat(fileout, sizebuf);
+						strcat(fileout, "\r\n\r\n");
+						strcat(fileout, tempbuf);
+						strcat(fileout, "\0");
+						cout<<"DEBUG2: "<<temp<<endl;
+						write(accepted, fileout, strlen(fileout));
+						free(tempbuf);
 					}
 					else{
 						perror("ERROR: fopen failed");
