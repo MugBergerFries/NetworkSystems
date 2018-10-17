@@ -58,8 +58,10 @@ int main(int argc, char *argv[]){
 			med = strtok(messagein, " ");
 			string method, path, vers;
 			method = med;
+			med = strtok(NULL, " ");
 			path = med;
-			//vers = med[2];
+			med = strtok(NULL, " ");
+			vers = med;
 			cout<<"METHOD, PATH: "<<method<<", "<<path<<endl;
 			if (method=="GET"){
 				printf("%s\n", "WE DID IT REDDIT\n");
