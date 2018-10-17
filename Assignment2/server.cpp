@@ -56,6 +56,7 @@ int main(int argc, char *argv[]){
 			}
 		}
 		else{ //We're the child process
+			close(sock);
 			messagein = (char*)malloc(5000);
 			insize = recv(accepted, messagein, 5000, 0);
 			cout<<messagein<<endl;
