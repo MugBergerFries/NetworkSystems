@@ -97,10 +97,11 @@ int main(int argc, char *argv[]){
 					}
 				}
 				else{
-					char* abspath = new char [path.length()];
+					char* abspath = new char [path.length()+4];
 					char* pathcstr = new char [path.length()+1];
 					strcpy(pathcstr, path.c_str());
-					abspath=pathcstr+1;
+					strcpy(abspath, "www");
+					strcpy(abspath, pathcstr);
 					cout<<"DEBUG: "<<abspath<<endl;
 					curfile = fopen(abspath, "rb");
 					if (curfile!=NULL){//If file is open
