@@ -13,13 +13,14 @@ using namespace std;
 
 int main(int argc, char *argv[]){
 	struct sockaddr_in server, client;
-	int sock, insize, port, socksize;
-	char messagein[5000];
+	int sock, insize, port, socksize, filesize;
+	char *messagein;
 	sock = socket(AF_INET, SOCK_STREAM, 0);
 	server.sin_family = AF_INET;
 	server.sin_addr.s_addr = INADDR_ANY;
 	port = strtol(argv[1], NULL, 10);
 	server.sin_port = htons(port);
+	FILE* curfile;
 	if(bind(sock, (struct sockaddr*)&server, sizeof(server))==-1){
 		perror("ERROR: Bind failed");
 		return 1;
