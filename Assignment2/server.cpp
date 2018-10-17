@@ -50,7 +50,6 @@ int main(int argc, char *argv[]){
 			write(accepted, fileout, strlen(fileout));
 			return 1;
 		}
-		puts("SUCCESS: Fork complete");
 		if (pid>0){ //We're the parent process, pid is child's pid
 			if (!!waitpid(-1, &wstatus, WNOHANG)){//Check if any process has finished, but don't hang
 				puts("SUCCESS: A child returned");
@@ -128,7 +127,7 @@ int main(int argc, char *argv[]){
 							cout<<"ERROR: file type not recognized: "<<med2<<endl;
 							return 1;
 						}
-						char fileout[100000] = "HTTP/1.1 200 Document Follows\r\nContent-Type: ";
+						char fileout[200000] = "HTTP/1.1 200 Document Follows\r\nContent-Type: ";
 						strcat(fileout, corrosponding[ans]);
 						strcat(fileout, "\r\nContent-Length: ");
 						strcat(fileout, sizebuf);
