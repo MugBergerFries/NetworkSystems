@@ -14,7 +14,7 @@ using namespace std;
 int main(int argc, char *argv[]){
 	struct sockaddr_in server, client;
 	int sock, insize, port, socksize;
-	string messagein;
+	char messagein[1000];
 	sock = socket(AF_INET, SOCK_STREAM, 0);
 	server.sin_family = AF_INET;
 	server.sin_addr.s_addr = INADDR_ANY;
