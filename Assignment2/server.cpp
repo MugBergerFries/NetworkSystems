@@ -117,8 +117,9 @@ int main(int argc, char *argv[]){
 						char* pathtmp = new char [path.length()+1];
 						strcpy(pathtmp, path.c_str());
 						strtok(pathtmp, ".");
-						while ((char *tmp=strtok(NULL, "."))!=NULL){
-							med2 = tmp;
+						char *med2tmp
+						while ((med2tmp=strtok(NULL, "."))!=NULL){
+							med2 = med2tmp;
 						}
 						int ans=-1;
 						for (int i=0;i<7;i++){
