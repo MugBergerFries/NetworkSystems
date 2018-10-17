@@ -151,6 +151,7 @@ int main(int argc, char *argv[]){
 						perror("ERROR: fopen failed");
 						char fileout[38] = "HTTP/1.1 500 Internal Server Error";
 						write(accepted, fileout, 38);
+						cout<<"Server error sent"<<endl;
 						close(accepted);
 						return 1;
 					}
