@@ -101,6 +101,7 @@ int main(int argc, char *argv[]){
 					char* pathtmp = new char [path.length()+1];
 					strcpy(pathtmp, path.c_str());
 					abspath = strtok(pathtmp, "/");
+					cout<<"DEBUG: "<<abspath<<endl;
 					curfile = fopen(abspath, "rb");
 					if (curfile!=NULL){//If file is open
 						if (fseek(curfile, 0, SEEK_END) != 0) perror("ERROR: Fseek failed");
