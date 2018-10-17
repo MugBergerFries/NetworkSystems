@@ -114,7 +114,7 @@ int main(int argc, char *argv[]){
 						temp = fread(tempbuf, 1, filesize, curfile);//Read file into buffer
 						FILE* outtest;
 						outtest = fopen("outlog.txt", "wb");
-						fprintf(outtest, "%s\n", tempbuf);
+						fwrite(outtest, sizeof(char), temp, tempbuf);
 						fclose(outtest);
 						char sizebuf[sizeof(int)];
 						sprintf(sizebuf, "%d", filesize);
