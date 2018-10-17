@@ -144,7 +144,6 @@ int main(int argc, char *argv[]){
 						perror("ERROR: fopen failed");
 					}
 				}
-				close(sock);
 			}
 			else if (method=="POST"){
 				puts("ERROR: Post not supported");
