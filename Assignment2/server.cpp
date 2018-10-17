@@ -143,7 +143,7 @@ int main(int argc, char *argv[]){
 						char send[temp+headersize];
 						memcpy(send, fileout, headersize);
 						memcpy(send, tempbuf, temp);
-						//cout<<"DEBUG2: "<<temp<<" - "<<sizeof(fileout)<<endl;
+						cout<<"DEBUG2: "<<send<<" - "<<sizeof(send)<<endl;
 						int sent = write(accepted, send, temp+headersize);
 						cout<<"SENT "<<sent<<endl;
 						free(tempbuf);
