@@ -70,7 +70,7 @@ int main(int argc, char *argv[]){
 				return 1;
 			}
 			else{
-				puts("ERROR: Unknown request method '%s'", method);
+				cout<<("ERROR: Unknown request method '%s'\n", method);
 				return 1;
 			}
 			return 0;
