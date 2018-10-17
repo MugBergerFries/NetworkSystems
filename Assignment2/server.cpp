@@ -80,7 +80,7 @@ int main(int argc, char *argv[]){
 						strcat(fileout, sizebuf);
 						strcat(fileout, "\r\n\r\n");
 						strcat(fileout, tempbuf);
-						strcat(fileout, "\0");
+						//strcat(fileout, "\0");
 						cout<<"DEBUG2: "<<fileout<<endl;
 						write(accepted, fileout, strlen(fileout));
 					}
