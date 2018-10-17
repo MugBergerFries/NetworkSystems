@@ -85,7 +85,7 @@ int main(int argc, char *argv[]){
 						strcat(fileout, "\r\n\r\n");
 						strcat(fileout, tempbuf);
 						strcat(fileout, "\0");
-						cout<<"DEBUG2: "<<temp<<endl;
+						cout<<"DEBUG2: "<<temp<<" - "<<strlen(fileout)<<endl;
 						write(accepted, fileout, strlen(fileout));
 						free(tempbuf);
 					}
