@@ -143,6 +143,8 @@ int main(int argc, char *argv[]){
 						cout<<"DEBUG2: "<<temp<<" - "<<sizeof(fileout)<<endl;
 						write(accepted, fileout, sizeof(fileout));
 						free(tempbuf);
+						shutdown(accepted, SHUT_WR);
+						while (recv(accepted, messagein, 100000, 0)!=0){}
 						close(accepted);
 						return 1;
 					}
