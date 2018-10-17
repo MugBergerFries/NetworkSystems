@@ -100,10 +100,7 @@ int main(int argc, char *argv[]){
 					char* abspath = new char [path.length()];
 					char* pathcstr = new char [path.length()+1];
 					strcpy(pathcstr, path.c_str());
-					for (int i=0;i<path.length();i++){
-						cout<<"next: "<<path[i++]<<endl;
-						*abspath[i]=*pathcstr[i++];
-					}
+					*abspath=&pathcstr[1];
 					cout<<"DEBUG: "<<path<<endl;
 					curfile = fopen(abspath, "rb");
 					if (curfile!=NULL){//If file is open
