@@ -92,6 +92,7 @@ int main(int argc, char *argv[]){
 						perror("ERROR: fopen failed");
 						char fileout[5000] = "HTTP/1.1 500 Internal Server Error";
 						write(accepted, fileout, strlen(fileout));
+						close(accepted);
 						return 1;
 					}
 				}
@@ -126,6 +127,9 @@ int main(int argc, char *argv[]){
 						}
 						if (ans==-1){
 							cout<<"ERROR: file type not recognized: "<<med2<<endl;
+							char fileout[5000] = "HTTP/1.1 500 Internal Server Error";
+							write(accepted, fileout, strlen(fileout));
+							close(accepted);
 							return 1;
 						}
 						char fileout[200000] = "HTTP/1.1 200 Document Follows\r\nContent-Type: ";
@@ -140,9 +144,14 @@ int main(int argc, char *argv[]){
 						cout<<"DEBUG2: "<<temp<<" - "<<sizeof(fileout)<<endl;
 						write(accepted, fileout, sizeof(fileout)-1);
 						free(tempbuf);
+						close(accepted);
 					}
 					else{
 						perror("ERROR: fopen failed");
+						char fileout[5000] = "HTTP/1.1 500 Internal Server Error";
+						write(accepted, fileout, strlen(fileout));
+						close(accepted);
+						return 1;
 					}
 				}
 			}
