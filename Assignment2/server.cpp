@@ -97,7 +97,7 @@ int main(int argc, char *argv[]){
 					}
 				}
 				else{
-					char* abspath = new char[strlen(path)+2];
+					char* abspath = new char[path.length()+2];
 					strcpy(abspath, ".");
 					strcat(abspath, path.c_str());
 					curfile = fopen(abspath, "rb");
