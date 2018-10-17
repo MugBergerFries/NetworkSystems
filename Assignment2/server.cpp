@@ -128,7 +128,7 @@ int main(int argc, char *argv[]){
 							cout<<"ERROR: file type not recognized: "<<med2<<endl;
 							return 1;
 						}
-						char fileout[5000] = "HTTP/1.1 200 Document Follows\r\nContent-Type: ";
+						char fileout[100000] = "HTTP/1.1 200 Document Follows\r\nContent-Type: ";
 						strcat(fileout, corrosponding[ans]);
 						strcat(fileout, "\r\nContent-Length: ");
 						strcat(fileout, sizebuf);
