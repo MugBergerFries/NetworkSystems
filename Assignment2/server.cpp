@@ -138,12 +138,10 @@ int main(int argc, char *argv[]){
 						strcat(fileout, "\r\nContent-Length: ");
 						strcat(fileout, sizebuf);
 						strcat(fileout, "\r\n\r\n");
-						cout<<"test: "<<strlen(fileout)<<" - "<<sizeof(tempbuf)<<endl;
 						strcat(fileout, tempbuf);
-						cout<<"test2: "<<strlen(fileout)<<endl;
 						//strcat(fileout, "\0");
 						cout<<"DEBUG2: "<<temp<<" - "<<sizeof(fileout)<<endl;
-						write(accepted, fileout, sizeof(fileout)-1);
+						write(accepted, fileout, sizeof(fileout));
 						free(tempbuf);
 						close(accepted);
 						return 1;
