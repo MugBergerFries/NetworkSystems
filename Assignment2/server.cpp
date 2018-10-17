@@ -141,7 +141,7 @@ int main(int argc, char *argv[]){
 						cout<<"test: "<<strlen(fileout)<<" - "<<sizeof(tempbuf)<<endl;
 						strcat(fileout, tempbuf);
 						cout<<"test2: "<<strlen(fileout)<<endl;
-						strcat(fileout, "\0");
+						//strcat(fileout, "\0");
 						cout<<"DEBUG2: "<<temp<<" - "<<sizeof(fileout)<<endl;
 						write(accepted, fileout, sizeof(fileout)-1);
 						free(tempbuf);
