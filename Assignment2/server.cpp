@@ -53,7 +53,8 @@ int main(int argc, char *argv[]){
 			}
 		}
 		else{ //We're the child process
-			insize = recv(accepted, &messagein, 5000, 0);
+			messagein = malloc(5000);
+			insize = recv(accepted, messagein, 5000, 0);
 			cout<<"MESSAGEIN: "<<messagein<<endl;
 			char * med;
 			med = strtok(messagein, " ");
