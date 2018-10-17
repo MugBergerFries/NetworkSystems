@@ -133,7 +133,7 @@ int main(int argc, char *argv[]){
 							close(accepted);
 							return 1;
 						}
-						char fileout[200000] = "HTTP/1.1 200 Document Follows\r\nContent-Type: ";
+						char fileout[10000000] = "HTTP/1.1 200 Document Follows\r\nContent-Type: ";
 						strcat(fileout, corrosponding[ans]);
 						strcat(fileout, "\r\nContent-Length: ");
 						strcat(fileout, sizebuf);
