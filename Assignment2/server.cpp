@@ -93,7 +93,8 @@ int main(int argc, char *argv[]){
 						return 1;
 					}
 					else{
-						perror("ERROR: index file", path);
+						perror("ERROR: index file");
+						cout<<"Path in question (not absolute): "<<path<<endl<<endl;
 						char fileout[5000] = "HTTP/1.1 500 Internal Server Error";
 						write(accepted, fileout, strlen(fileout));
 						close(accepted);
@@ -157,7 +158,8 @@ int main(int argc, char *argv[]){
 						return 1;
 					}
 					else{
-						perror("ERROR: failed to open %s", abspath);
+						perror("ERROR: failed to open file");
+						cout<<"Path in question: "<<abspath<<endl<<endl;
 						char fileout[38] = "HTTP/1.1 500 Internal Server Error";
 						write(accepted, fileout, 38);
 						close(accepted);
