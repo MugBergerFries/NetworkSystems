@@ -1,25 +1,26 @@
-#include<iostream>
 #include<stdio.h>
 #include<string.h>
-#include<string>
 #include<sys/socket.h>
 #include<arpa/inet.h>
 #include<unistd.h>
 #include<sys/types.h>
 #include<sys/wait.h>
 #include<stdlib.h>
+#include<netinet/in.h>
+#include<netdb.h> 
 
 using namespace std;
 
 int main(int argc, char *argv[]){
 	struct sockaddr_in server, client;
 	int sock, insize, port, socksize;
-	char messagein[5000];
+	string messagein;
 	sock = socket(AF_INET, SOCK_STREAM, 0);
 	server.sin_family = AF_INET;
 	server.sin_addr.s_addr = INADDR_ANY;
 	port = strtol(argv[1], NULL, 10);
 	server.sin_port = htons(port);
+	FILE* curfile;
 	if(bind(sock, (struct sockaddr*)&server, sizeof(server))==-1){
 		perror("ERROR: Bind failed");
 		return 1;
@@ -53,35 +54,12 @@ int main(int argc, char *argv[]){
 		}
 		else{ //We're the child process
 			insize = recv(accepted, messagein, 5000, 0);
-			cout<<"MESSAGEIN: "<<messagein<<endl;
-			char * med;
-			med = strtok(messagein, " ");
+			printf("MESSAGEIN: %s\n", messagein);
 			string method, path, vers;
-			method = med;
-			med = strtok(NULL, " ");
-			path = med;
-			med = strtok(NULL, " ");
-			vers = med;
-			cout<<"METHOD, PATH: "<<method<<", "<<path<<endl;
+			method = getline(messagein, method, ' ');
+			printf("METHOD: %s\n", method);
 			if (method=="GET"){
-				if (path=="/" || path=="/inside/"){
-					curfile = fopen("./www/index.html", "rb");
-					if (curfile!=NULL){//If file is open
-						if (fseek(curfile, 0, SEEK_END) != 0) perror("ERROR: Fseek failed");
-						filesize = ftello(curfile);//Seek to end of file and report position to get file size
-						char* tempbuf = malloc(filesize);
-						int temp;
-						temp = fread(tempbuf, 1, filesize, curfile);//Read file into buffer
-						char sizebuf[sizeof(int)];
-						sprintf(sizebuf, "%d", filesize);
-						messagein = "HTTP/1.1 200 Document Follows\r\nContent-Type: text/html\r\nContent-Length: ";
-						strcat(messagein, sizebuf);
-						strcat(messagein, "\r\n\r\n");
-						strcat(messagein, tempbuf);
-						strcat(messagein, '\0');
-						write(accepted, messagein, strlen(messagein));
-					}
-				}
+				
 				close(sock);
 			}
 			else if (method=="POST"){
@@ -93,7 +71,7 @@ int main(int argc, char *argv[]){
 				return 1;
 			}
 			else{
-				cout<<"ERROR: Unknown request method '"<<method<<"'\n";
+				puts("ERROR: Unknown request method '%s'", method);
 				return 1;
 			}
 			return 0;
