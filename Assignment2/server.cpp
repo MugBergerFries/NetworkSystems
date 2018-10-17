@@ -138,10 +138,11 @@ int main(int argc, char *argv[]){
 						strcat(fileout, "\r\nContent-Length: ");
 						strcat(fileout, sizebuf);
 						strcat(fileout, "\r\n\r\n");
+						int headersize = strlen(fileout);
 						strcat(fileout, tempbuf);
 						//strcat(fileout, "\0");
 						cout<<"DEBUG2: "<<temp<<" - "<<sizeof(fileout)<<endl;
-						int sent = write(accepted, fileout, sizeof(fileout));
+						int sent = write(accepted, fileout, temp+headersize+1);
 						cout<<"SENT "<<sent<<endl;
 						free(tempbuf);
 						shutdown(accepted, SHUT_WR);
