@@ -57,10 +57,10 @@ int main(int argc, char *argv[]){
 			char * med;
 			med = strtok(messagein, " ");
 			string method, path, vers;
-			method = med[0];
-			path = med[1];
-			vers = med[2];
-			cout<<"METHOD: "<<method<<endl;
+			method = med;
+			path = med;
+			//vers = med[2];
+			cout<<"METHOD, PATH: "<<method<<", "<<path<<endl;
 			if (method=="GET"){
 				printf("%s\n", "WE DID IT REDDIT\n");
 				close(sock);
