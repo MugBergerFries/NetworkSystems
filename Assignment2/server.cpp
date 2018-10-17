@@ -55,7 +55,7 @@ int main(int argc, char *argv[]){
 		else{ //We're the child process
 			messagein = (char*)malloc(5000);
 			insize = recv(accepted, messagein, 5000, 0);
-			cout<<"MESSAGEIN: "<<messagein<<endl;
+			cout<<messagein<<endl;
 			char * med;
 			med = strtok(messagein, " ");
 			string method, path, vers;
@@ -64,7 +64,6 @@ int main(int argc, char *argv[]){
 			path = med;
 			med = strtok(NULL, " ");
 			vers = med;
-			cout<<"METHOD, PATH: "<<method<<", "<<path<<endl;
 			if (method=="GET"){
 				if (path=="/" || path=="/inside/"){
 					curfile = fopen("./www/index.html", "rb");
@@ -81,6 +80,7 @@ int main(int argc, char *argv[]){
 						strcat(messagein, "\r\n\r\n");
 						strcat(messagein, tempbuf);
 						strcat(messagein, '\0');
+						cout<<"DEBUG: "<<messagein<<endl;
 						write(accepted, messagein, strlen(messagein));
 					}
 					else{
