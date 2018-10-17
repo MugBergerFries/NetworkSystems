@@ -133,7 +133,8 @@ int main(int argc, char *argv[]){
 							close(accepted);
 							return 1;
 						}
-						char fileout[1500000] = "HTTP/1.1 200 Document Follows\r\nContent-Type: ";
+						char *fileout = (char*)malloc(1500000);
+						strcpy(fileout, "HTTP/1.1 200 Document Follows\r\nContent-Type: ");
 						strcat(fileout, corrosponding[ans]);
 						strcat(fileout, "\r\nContent-Length: ");
 						strcat(fileout, sizebuf);
@@ -145,6 +146,7 @@ int main(int argc, char *argv[]){
 						int sent = write(accepted, fileout, temp+headersize);
 						cout<<"SENT "<<sent<<endl;
 						free(tempbuf);
+						free(fileout);
 						shutdown(accepted, SHUT_WR);
 						while (recv(accepted, messagein, 100000, 0)!=0){}
 						close(accepted);
