@@ -12,6 +12,8 @@
 using namespace std;
 
 int main(int argc, char *argv[]){
+	char types[7][4] = {"html", "txt", "png", "gif", "jpg", "css", "js"}
+	char corrosponding[7][22] = {"text/html", "text/plain", "image/png", "image/gif", "image/jpg", "text/css", "application/javascript"}
 	struct sockaddr_in server, client;
 	int sock, insize, port, socksize, filesize;
 	char *messagein;
@@ -105,8 +107,19 @@ int main(int argc, char *argv[]){
 						temp = fread(tempbuf, 1, filesize, curfile);//Read file into buffer
 						char sizebuf[sizeof(int)];
 						sprintf(sizebuf, "%d", filesize);
+						char* med2;
+						strtok(path, ".");
+						med2 = strtok(NULL, ".");
+						int ans=-1;
+						for (int i=0;i<7;i++){
+							if (!strcmp(med2, types[i])) ans=i;
+						}
+						if (ans==-1){
+							cout<<"ERROR: file type not recognized: "<<med2<<endl;
+							return 1;
+						}
 						char fileout[5000] = "HTTP/1.1 200 Document Follows\r\nContent-Type: ";
-						strcat(fileout, );
+						strcat(fileout, corrosponding[i]);
 						strcat(fileout, "\r\nContent-Length: ");
 						strcat(fileout, sizebuf);
 						strcat(fileout, "\r\n\r\n");
