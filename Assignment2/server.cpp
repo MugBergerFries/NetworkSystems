@@ -112,10 +112,6 @@ int main(int argc, char *argv[]){
 						char* tempbuf = (char*)malloc(filesize);
 						int temp;
 						temp = fread(tempbuf, 1, filesize, curfile);//Read file into buffer
-						FILE* outtest;
-						outtest = fopen("outlog.txt", "wb");
-						fwrite(tempbuf, sizeof(char), temp, outtest);
-						fclose(outtest);
 						char sizebuf[sizeof(int)];
 						sprintf(sizebuf, "%d", filesize);
 						char* med2;
@@ -144,10 +140,11 @@ int main(int argc, char *argv[]){
 						strcat(fileout, sizebuf);
 						strcat(fileout, "\r\n\r\n");
 						int headersize = strlen(fileout);
-						strcat(fileout, tempbuf);
-						//strcat(fileout, "\0");
-						cout<<"DEBUG2: "<<temp<<" - "<<sizeof(fileout)<<endl;
-						int sent = write(accepted, fileout, temp+headersize);
+						char send[temp+headersize];
+						memcpy(send, fileout, headersize);
+						memcpy(send, tempbuf, temp);
+						//cout<<"DEBUG2: "<<temp<<" - "<<sizeof(fileout)<<endl;
+						int sent = write(accepted, send, temp+headersize);
 						cout<<"SENT "<<sent<<endl;
 						free(tempbuf);
 						free(fileout);
