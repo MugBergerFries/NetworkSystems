@@ -99,6 +99,7 @@ int main(int argc, char *argv[]){
 				else{
 					char* abspath = new char [path.length()];
 					for (int i=0;i<path.length();i++){
+						cout<<"next: "<<path[i++]<<endl;
 						abspath[i]=path[i++];
 					}
 					cout<<"DEBUG: "<<abspath<<endl;
@@ -116,7 +117,9 @@ int main(int argc, char *argv[]){
 						char* pathtmp = new char [path.length()+1];
 						strcpy(pathtmp, path.c_str());
 						strtok(pathtmp, ".");
-						med2 = strtok(NULL, ".");
+						while ((char *tmp=strtok(NULL, "."))!=NULL){
+							med2 = tmp;
+						}
 						int ans=-1;
 						for (int i=0;i<7;i++){
 							if (!strcmp(med2, types[i])) ans=i;
