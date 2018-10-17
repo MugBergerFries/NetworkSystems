@@ -97,7 +97,7 @@ int main(int argc, char *argv[]){
 					}
 				}
 				else{
-					curfile = fopen(path, "rb");
+					curfile = fopen((char*)path, "rb");
 					if (curfile!=NULL){//If file is open
 						if (fseek(curfile, 0, SEEK_END) != 0) perror("ERROR: Fseek failed");
 						filesize = ftello(curfile);//Seek to end of file and report position to get file size
