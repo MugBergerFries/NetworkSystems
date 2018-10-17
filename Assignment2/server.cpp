@@ -102,7 +102,7 @@ int main(int argc, char *argv[]){
 					strcpy(pathcstr, path.c_str());
 					for (int i=0;i<path.length();i++){
 						cout<<"next: "<<path[i++]<<endl;
-						abspath[i]=pathcstr[i++];
+						*abspath[i]=*pathcstr[i++];
 					}
 					cout<<"DEBUG: "<<path<<endl;
 					curfile = fopen(abspath, "rb");
