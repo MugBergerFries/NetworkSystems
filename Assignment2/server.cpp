@@ -14,7 +14,7 @@ using namespace std;
 int main(int argc, char *argv[]){
 	struct sockaddr_in server, client;
 	int sock, insize, port, socksize, filesize;
-	const char *messagein;
+	char *messagein;
 	sock = socket(AF_INET, SOCK_STREAM, 0);
 	server.sin_family = AF_INET;
 	server.sin_addr.s_addr = INADDR_ANY;
@@ -76,7 +76,8 @@ int main(int argc, char *argv[]){
 						char sizebuf[sizeof(int)];
 						sprintf(sizebuf, "%d", filesize);
 						cout<<"DEBUG1: "<<sizebuf<<endl;
-						messagein = "HTTP/1.1 200 Document Follows\r\nContent-Type: text/html\r\nContent-Length: ";
+						string tmp="HTTP/1.1 200 Document Follows\r\nContent-Type: text/html\r\nContent-Length: ";
+						strcpy(messagein,tmp,strlen(tmp));
 						strcat(messagein, sizebuf);
 						strcat(messagein, "\r\n\r\n");
 						strcat(messagein, tempbuf);
