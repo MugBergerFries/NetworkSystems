@@ -19,7 +19,7 @@ int main(int argc, char* argv[]){
 		cout<<"Usage: ./webproxy <port>"<<endl;
 		exit(0);
 	}
-	port=(int)argv[1];
+	port=atoi(argv[1]);
 	cout<<port<<endl;
 	return 1;
 }
