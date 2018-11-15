@@ -24,8 +24,12 @@ int main(int argc, char* argv[]){
 	server.sin_family = AF_INET;//IPv4
 	server.sin_addr.s_addr = INADDR_ANY;//Bind to all interfaces
 	server.sin_port = htons(port);//Set server port as argv[1]
-	if(bind(ssock, (struct sockaddr*)&server, sizeof(server))==-1){//Bind server to sock
+	if(bind(ssock, (struct sockaddr*)&server, sizeof(server))<0){//Bind server to sock
 		perror("ERROR: Bind failed");
-		return 1;
+		exit(0);
+	}
+	if (!!listen(ssock,100)){//Set sock as a passive socket with a max queue of 100 requests
+		perror("ERROR: Listen failed");
+		exit(0);
 	}
 }
