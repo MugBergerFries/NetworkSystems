@@ -8,7 +8,7 @@
 #include<sys/types.h>
 #include<sys/wait.h>
 #include<stdlib.h>
-#include<functional>
+#include<tr1/functional>
 
 using namespace std;
 
