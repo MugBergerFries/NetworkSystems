@@ -18,9 +18,9 @@ int main(int argc, char* argv[]){
 	string c = "tester";
 	hash<string> f;
 	size_t ah = f(a);
-	size_t ah = f(b);
-	size_t ah = f(c);
-	cout<<f(a)<<" - "<<f(b)<<" - "<<f(c)<<endl;
+	size_t bh = f(b);
+	size_t ch = f(c);
+	cout<<ah<<" - "<<bh<<" - "<<ch<<endl;
 	/*int port, socksize; //webproxy port
 	int ssock, csock; //server and client socket
 	struct sockaddr_in server, client;//Endpoint addresses for client and server
