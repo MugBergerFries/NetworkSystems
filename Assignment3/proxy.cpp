@@ -192,7 +192,7 @@ int main(int argc, char* argv[]){
             			exit(1);
         			}
         			int test;
-            		string final = ("GET " + path.substr(path.substr(11).find("/", 0)+11) + " " + vers + " " + host + "\r\nConnection: keep-alive\r\n\r\n");
+            		string final = ("GET " + path.substr(path.substr(11).find("/", 0)+11) + " " + vers + " " + host + "\nConnection: keep-alive\r\n\r\n");
             		cout<<"SENDING: "<<final<<endl;
             		test = write(ssock, final.c_str(), strlen(final.c_str()));
             		while((msgsize = recv(ssock, messagecpy, 100000, 0)) > 0){
