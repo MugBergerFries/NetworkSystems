@@ -180,7 +180,7 @@ int main(int argc, char* argv[]){
 
     				/* Connect the socket */
         			if (connect(s, (struct sockaddr *)&server, sizeof(server)) < 0){
-            			printf("can't connect to %s.80: %s\n", path, strerror(errno));
+            			printf("can't connect to %s.80: %s\n", path.c_str(), strerror(errno));
             			exit(1);
         			}
         			int test;
