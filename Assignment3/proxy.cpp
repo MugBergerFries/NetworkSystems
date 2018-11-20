@@ -191,7 +191,7 @@ int main(int argc, char* argv[]){
         			cout<<messagecpy<<" - PLS"<<endl;
             		test = write(ssock, messagecpy, sizeof(messagecpy));
             		while((msgsize = recv(ssock, messagecpy, 100000, 0)) > 0){
-            			curfile<<messagecpy;
+						fwrite(messagecpy, 1, 100000, curfile);//Write form buffer to file
             			write(csock, messagecpy, 100000);
         			}
 					shutdown(ssock, SHUT_WR);//Tell client we want to close the connection
