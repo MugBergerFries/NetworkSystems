@@ -77,12 +77,14 @@ int main(int argc, char* argv[]){
 			memcpy(messagecpy, messagein, 100000);
 			char* med;//Middleman to parse message
 			med = strtok(messagein, " ");//Get message until first " "
-			string method, path, vers;
+			string method, path, vers, host;
 			method = med;//In this case, this will be GET, POST, HEAD
 			med = strtok(NULL, " ");//Get after first space and before second
 			path = med;//In this case, this will be the path requested
-			med = strtok(NULL, "\n");
+			med = strtok(NULL, "");
 			vers = med;//This will be the HTTP version
+			med = strtok(NULL, "\n");
+			host = med;
 			cout<<"vers is "<<vers;
 			vector<string>::iterator urlindex;
 			string urlhash = to_string(f(path));
@@ -190,7 +192,7 @@ int main(int argc, char* argv[]){
             			exit(1);
         			}
         			int test;
-            		string final = ("GET " + path.substr(path.substr(11).find("/", 0)+11) + " " + vers + "\r\n\r\n");
+            		string final = ("GET " + path.substr(path.substr(11).find("/", 0)+11) + " " + vers + host + "\r\n\r\n");
             		test = write(ssock, final.c_str(), strlen(final.c_str()));
             		while((msgsize = recv(ssock, messagecpy, 100000, 0)) > 0){
             			cout<<"Reply received: size = "<<msgsize<<endl;
