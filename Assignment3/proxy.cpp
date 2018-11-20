@@ -86,7 +86,7 @@ int main(int argc, char* argv[]){
 					rotate(urlcache.begin(), urlcache.begin()+urlindex, urlcache.begin()+urlindex+1);
 					char filename[30];
 					strcpy(filename, "cache/");
-					strcat(filename, urlhash);
+					strcat(filename, urlhash.c_str());
 					curfile = fopen(filename, "rb");
 					if (fseek(curfile, 0, SEEK_END) != 0) perror("ERROR: Fseek failed");
 					filesize = ftello(curfile);//Seek to end of file and report position to get file size
