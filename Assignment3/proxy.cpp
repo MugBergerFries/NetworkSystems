@@ -24,9 +24,11 @@ int main(int argc, char* argv[]){
 	int port, socksize, filesize; //webproxy port
 	int psock, csock; //proxy and client socket
 	FILE* curfile;
+	FILE* blocked;
 	char* messagein;
 	char* messagecpy;
-	vector<int> tbd;
+	vector<string> blockhost;
+	vector<hostent> blockip;
 	struct sockaddr_in proxy, client;//Endpoint addresses for client and proxy
 	if (argc != 3) {//Make sure there are the right amount of inputs
 		cout<<"Usage: ./webproxy <port> <timeout>"<<endl;
@@ -49,6 +51,20 @@ int main(int argc, char* argv[]){
 	}
 	int pid = -1;//Process id for future children
 	int wstatus;
+	ifstream inFile;
+	string tmp;
+	inFile.open("blacklist.txt");
+	while (getline(inFile, tmp)!="-"){
+		blockhost.push_back(tmp);
+	}
+	while (getline(inFile, tmp)){
+		blockip.push_back(tmp);
+	}
+	for (vector<string>::const_iterator i = blockhost.begin(); i != blockhost.end(); ++i)
+    	cout << *i << ' ';
+    cout<<endl;
+	for (vector<hostent>::const_iterator i = blockip.begin(); i != blockip.end(); ++i)
+    	cout << *i << ' ';
 	while (1){
 		socksize = sizeof(client);
 		csock = accept(psock, (struct sockaddr*)&client, (socklen_t*)&socksize);//Accept an incoming connetion (SYN, ACK)
