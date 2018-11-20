@@ -16,6 +16,8 @@
 
 using namespace std;
 
+vector<string> urlcache;
+
 int main(int argc, char* argv[]){
 	hash<string> f;
 	int port, socksize, filesize; //webproxy port
@@ -23,7 +25,6 @@ int main(int argc, char* argv[]){
 	FILE* curfile;
 	char* messagein;
 	char* messagecpy;
-	vector<string> urlcache;
 	vector<int> tbd;
 	struct sockaddr_in proxy, client;//Endpoint addresses for client and proxy
 	if (argc != 3) {//Make sure there are the right amount of inputs
