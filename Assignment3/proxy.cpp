@@ -84,13 +84,13 @@ int main(int argc, char* argv[]){
 			med = strtok(NULL, " ");
 			cout<<med<<endl;
 			vers = med;//This will be the HTTP version
-			int urlindex;
+			vector<string>::iterator urlindex;
 			string urlhash = to_string(f(path));
 			cout<<urlhash<<endl;
 			if (method=="GET"){
 				if(!urlcache.empty() && (find(urlcache.begin(), urlcache.end(), urlhash) != urlcache.end())) {
 					urlindex = find(urlcache.begin(), urlcache.end(), urlhash)
-					rotate(urlcache.begin(), urlcache.begin()+urlindex, urlcache.begin()+urlindex+1);
+					rotate(urlcache.begin(), urlindex, urlindex+1);
 					char filename[30];
 					strcpy(filename, "cache/");
 					strcat(filename, urlhash.c_str());
