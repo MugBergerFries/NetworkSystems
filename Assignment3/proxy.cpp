@@ -188,8 +188,8 @@ int main(int argc, char* argv[]){
             			exit(1);
         			}
         			int test;
-       				cout<<"sending bytes: "<<sizeof(messagecpy)<<endl;
-            		test = write(ssock, messagecpy, sizeof(messagecpy));
+       				cout<<"sending bytes: "<<strlen(messagecpy)<<endl;
+            		test = write(ssock, messagecpy, strlen(messagecpy));
             		cout<<"test is "<<test<<endl;
             		while((msgsize = recv(ssock, messagecpy, 100000, 0)) > 0){
 						fwrite(messagecpy, 1, 100000, curfile);//Write form buffer to file
