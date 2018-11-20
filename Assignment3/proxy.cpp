@@ -89,7 +89,7 @@ int main(int argc, char* argv[]){
 			cout<<urlhash<<endl;
 			if (method=="GET"){
 				if(!urlcache.empty() && (find(urlcache.begin(), urlcache.end(), urlhash) != urlcache.end())) {
-					urlindex = find(urlcache.begin(), urlcache.end(), urlhash)
+					urlindex = find(urlcache.begin(), urlcache.end(), urlhash);
 					rotate(urlcache.begin(), urlindex, urlindex+1);
 					char filename[30];
 					strcpy(filename, "cache/");
