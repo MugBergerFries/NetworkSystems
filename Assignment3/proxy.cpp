@@ -85,7 +85,7 @@ int main(int argc, char* argv[]){
 			vers = med;//This will be the HTTP version
 			med = strtok(NULL, "\n");
 			host = med;
-			cout<<"host is "<<vers;
+			cout<<"host is "<<host;
 			vector<string>::iterator urlindex;
 			string urlhash = to_string(f(path));
 			if (method=="GET"){
