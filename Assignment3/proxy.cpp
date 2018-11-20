@@ -171,7 +171,7 @@ int main(int argc, char* argv[]){
                 		cout<<"can't get "<<path<<" host entry"<<endl;
                 		exit(1);
         			}
-
+        			cout<<"Got host by name"<<endl;
     				/* Allocate a socket */
         			int s = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP);
         			if (s < 0){
