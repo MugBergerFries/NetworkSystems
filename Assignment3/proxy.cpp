@@ -83,7 +83,7 @@ int main(int argc, char* argv[]){
 			path = med;//In this case, this will be the path requested
 			med = strtok(NULL, " ");
 			vers = med;//This will be the HTTP version
-			med = strtok(NULL, "");
+			med = strtok(NULL, "\0");
 			opt = med;//Everything left
 			cout<<"opt is "<<opt;
 			vector<string>::iterator urlindex;
