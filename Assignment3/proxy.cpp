@@ -187,7 +187,7 @@ int main(int argc, char* argv[]){
             		test = write(ssock, messagein, sizeof(messagein));
             		cout<<test<<endl;
             		while((msgsize = recv(ssock, messagein, 100000, 0)) > 0){
-            			fwrite(messagein, 1, msgsize, curfile);
+            			cout<<messagein;
             			write(csock, messagein, 100000);
         			}
 					shutdown(ssock, SHUT_WR);//Tell client we want to close the connection
