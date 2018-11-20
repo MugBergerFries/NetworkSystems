@@ -86,8 +86,8 @@ int main(int argc, char* argv[]){
 			vers = med;//This will be the HTTP version
 			vector<string>::iterator urlindex;
 			string urlhash = to_string(f(path));
-			cout<<(find(urlcache.begin(), urlcache.end(), urlhash) != urlcache.end())<<endl;
 			if (method=="GET"){
+				printf("BIG IF TRUE\n");
 				if(find(urlcache.begin(), urlcache.end(), urlhash) != urlcache.end()) {
 					urlindex = find(urlcache.begin(), urlcache.end(), urlhash);
 					rotate(urlcache.begin(), urlindex, urlindex+1);
@@ -143,6 +143,7 @@ int main(int argc, char* argv[]){
 					free(messagein);
 					return 1;
 				}else{
+					printf("GOTTA BE HERE BRO\n");
 					char oldname[30];
 					strcpy(oldname, "cache/");
 					strcat(oldname, urlcache.back().c_str());
