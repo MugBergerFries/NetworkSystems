@@ -197,7 +197,7 @@ int main(int argc, char* argv[]){
         			inet_ntop(AF_INET, &(server.sin_addr.s_addr), tester, INET_ADDRSTRLEN);
         			ip.assign(tester, find(tester, tester+INET_ADDRSTRLEN, '\0'));
         			cout<<"TESTING: "<<ip<<endl;
-        			if ((blockhost.find(blockhost.begin(), blockhost.end(), path.substr(7, path.substr(7).find("/", 0)), 0) != blockhost.end()) || (blockhost.find(blockhost.begin(), blockhost.end(), ip, 0) != blockhost.end()){
+        			if ((find(blockhost.begin(), blockhost.end(), path.substr(7, path.substr(7).find("/", 0)), 0) != blockhost.end()) || (find(blockhost.begin(), blockhost.end(), ip, 0) != blockhost.end()){
 						perror("ERROR: page blacklisted");
 						cout<<"Path in question (not absolute): "<<path<<endl<<endl;
 						char fileout[5000] = "HTTP/1.1 403 Forbidden\r\n\r\n";
