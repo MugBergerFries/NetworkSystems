@@ -153,18 +153,20 @@ int main(int argc, char* argv[]){
 					/* the following code block is from echoClient.c from Assignment1
 				    /* Map port number (char string) to port number (int)*/
         			if ((server.sin_port=htons((unsigned short)80)) == 0){
-                		printf("can't get \"%s\" port number\n", 80);
+                		printf("can't get \"%d\" port number\n", 80);
                 		exit(1);
         			}
 
-    				/* Map host name to IP address, allowing for dotted decimal *
+    				/* Map host name to IP address, allowing for dotted decimal */
         			if ( sent = gethostbyname(host) )
                 		memcpy(&server.sin_addr, sent->h_addr, sent->h_length);
-        			else if ( (server.sin_addr.s_addr = inet_addr(host)) == INADDR_NONE )
-                		errexit("can't get \"%s\" host entry\n", host);
+        			else if ( (server.sin_addr.s_addr = inet_addr(host)) == INADDR_NONE ){
+                		printf("can't get \"%s\" host entry\n", host);
+                		exit(1);
+        			}
 
     				/* Allocate a socket */
-        			s = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP);
+        			int s = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP);
         			if (s < 0){
                 		printf("can't create socket: %s\n", strerror(errno));
                 		exit(1);
@@ -172,7 +174,7 @@ int main(int argc, char* argv[]){
 
     				/* Connect the socket */
         			if (connect(s, (struct sockaddr *)&server, sizeof(server)) < 0){
-            			printf("can't connect to %s.%s: %s\n", host, portnum, strerror(errno));
+            			printf("can't connect to %s.80: %s\n", path, strerror(errno));
             			exit(1);
         			}
 
