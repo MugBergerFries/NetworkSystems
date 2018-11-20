@@ -84,7 +84,10 @@ int main(int argc, char* argv[]){
 			if (method=="GET"){
 				if(urlindex = find(urlcache.begin(), urlcache.end(), urlhash) != urlcache.end()) {
 					rotate(urlcache.begin(), urlcache.begin()+urlindex, urlcache.begin()+urlindex+1);
-					curfile = fopen(strcat("cache/", urlhash.c_str()), "rb");
+					char filename[30];
+					strcpy(filename, "cache/");
+					strcat(filename, urlhash);
+					curfile = fopen(filename, "rb");
 					if (fseek(curfile, 0, SEEK_END) != 0) perror("ERROR: Fseek failed");
 					filesize = ftello(curfile);//Seek to end of file and report position to get file size
 					rewind(curfile);//Reset file location pointer
