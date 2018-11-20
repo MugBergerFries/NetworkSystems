@@ -198,6 +198,7 @@ int main(int argc, char* argv[]){
 				}
 			}
 			else{
+				printf("SHIT, NOT GET: %s\n", method);
 				//Send HTTP 400 Bad Request
 			}
 			free(messagein);
