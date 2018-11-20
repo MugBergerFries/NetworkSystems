@@ -189,11 +189,8 @@ int main(int argc, char* argv[]){
             			exit(1);
         			}
         			int test;
-       				cout<<"sending bytes: "<<strlen(messagecpy)<<endl;
-            		test = write(ssock, messagecpy, strlen(messagecpy));
-            		cout<<"test is "<<path.substr(path.substr(11).find("/", 0)+11)<<endl;
             		string final = ("GET " + path.substr(path.substr(11).find("/", 0)+11) + " " + vers + "\r\n\r\n");
-            		cout<<final<<" is final"<<endl;
+            		test = write(ssock, final, strlen(final));
             		while((msgsize = recv(ssock, messagecpy, 100000, 0)) > 0){
             			cout<<"Reply received: size = "<<msgsize<<endl;
 						fwrite(messagecpy, 1, 100000, curfile);//Write form buffer to file
