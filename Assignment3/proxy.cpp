@@ -17,11 +17,7 @@ using namespace std;
 
 int main(int argc, char* argv[]){
 	hash<string> f;
-	string a = "test";
-	string b = "sdfjlhsdkgjflhsdgfkljhsdfglkjsahdflksdjahfskjdfhsaldjkfhsdlkjfhsd";
-	string c = "a";
-	cout<<f(a)<<endl<<f(b)<<endl<<f(c)<<endl;
-	/*int port, socksize; //webproxy port
+	int port, socksize; //webproxy port
 	int psock, csock; //proxy and client socket
 	FILE* curfile;
 	char* messagein;
@@ -88,7 +84,7 @@ int main(int argc, char* argv[]){
 			if (method=="GET"){
 				if(urlindex = find(urlcache.begin(), urlcache.end(), urlhash) != urlcache.end()) {
 					rotate(urlcache.begin(), urlcache.begin()+urlindex, urlcache.begin()+urlindex+1);
-					curfile = fopen(strcat("cache/", urlhash), "rb");
+					curfile = fopen(strcat("cache/", urlhash.c_str()), "rb");
 					if (fseek(curfile, 0, SEEK_END) != 0) perror("ERROR: Fseek failed");
 					filesize = ftello(curfile);//Seek to end of file and report position to get file size
 					rewind(curfile);//Reset file location pointer
@@ -146,7 +142,7 @@ int main(int argc, char* argv[]){
 					memset(&server, 0, sizeof(server));
 					server.sin_family = AF_INET;
 					/* the following code block is from echoClient.c from Assignment1
-				    /* Map port number (char string) to port number (int)*
+				    /* Map port number (char string) to port number (int)*/
         			if ((server.sin_port=htons((unsigned short)atoi(80))) == 0)
                 		errexit("can't get \"%s\" port number\n", 80);
 
@@ -156,12 +152,12 @@ int main(int argc, char* argv[]){
         			else if ( (server.sin_addr.s_addr = inet_addr(host)) == INADDR_NONE )
                 		errexit("can't get \"%s\" host entry\n", host);
 
-    				/* Allocate a socket *
+    				/* Allocate a socket */
         			s = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP);
         			if (s < 0)
                 		errexit("can't create socket: %s\n", strerror(errno));
 
-    				/* Connect the socket *
+    				/* Connect the socket */
         			if (connect(s, (struct sockaddr *)&server, sizeof(server)) < 0)
             			errexit("can't connect to %s.%s: %s\n", host, portnum, strerror(errno));
 
@@ -187,5 +183,4 @@ int main(int argc, char* argv[]){
 			return 0;
 		}
 	}
-	*/
 }
