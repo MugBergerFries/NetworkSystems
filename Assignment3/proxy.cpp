@@ -86,9 +86,9 @@ int main(int argc, char* argv[]){
 			vers = med;//This will be the HTTP version
 			vector<string>::iterator urlindex;
 			string urlhash = to_string(f(path));
-			cout<<distance(urlcache.begin(), find(urlcache.begin(), urlcache.end(), urlhash))<<" - "<<distance(urlcache.begin(), urlcache.end())<<endl;
+			cout<<(find(urlcache.begin(), urlcache.end(), urlhash) != urlcache.end())<<endl;
 			if (method=="GET"){
-				if(!urlcache.empty() && (find(urlcache.begin(), urlcache.end(), urlhash) != urlcache.end())) {
+				if(find(urlcache.begin(), urlcache.end(), urlhash) != urlcache.end()) {
 					urlindex = find(urlcache.begin(), urlcache.end(), urlhash);
 					rotate(urlcache.begin(), urlindex, urlindex+1);
 					char filename[30];
