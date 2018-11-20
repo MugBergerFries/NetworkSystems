@@ -88,6 +88,7 @@ int main(int argc, char* argv[]){
 					char filename[30];
 					strcpy(filename, "cache/");
 					strcat(filename, urlhash.c_str());
+					printf("Found %s in the cache\n", filename);
 					curfile = fopen(filename, "rb");
 					if (fseek(curfile, 0, SEEK_END) != 0) perror("ERROR: Fseek failed");
 					filesize = ftello(curfile);//Seek to end of file and report position to get file size
@@ -141,10 +142,12 @@ int main(int argc, char* argv[]){
 					strcat(oldname, urlcache.back().c_str());
 					urlcache.pop_back();
 					remove(oldname);
+					printf("Deleted %s\n", oldname);
 					urlcache.insert(urlcache.begin(), urlhash);
 					char filename[30];
 					strcpy(filename, "cache/");
 					strcat(filename, urlhash.c_str());
+					printf("Created %s\n", filename);
 					curfile = fopen(filename, "wb+");
 					int ssock, msgsize;
 					struct sockaddr_in server;
