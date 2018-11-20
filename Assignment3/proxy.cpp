@@ -19,6 +19,7 @@ using namespace std;
 vector<string> urlcache;
 
 int main(int argc, char* argv[]){
+	urlcache = mmap(NULL, sizeof *urlcache, PROT_READ | PROT_WRITE, MAP_SHARED | MAP_ANONYMOUS, -1, 0);
 	hash<string> f;
 	int port, socksize, filesize; //webproxy port
 	int psock, csock; //proxy and client socket
@@ -90,9 +91,9 @@ int main(int argc, char* argv[]){
 			vector<string>::iterator urlindex;
 			string urlhash = to_string(f(path));
 			if (method=="GET"){
-				if(find(urlcache.begin(), urlcache.end(), urlhash) != urlcache.end()) {
-					urlindex = find(urlcache.begin(), urlcache.end(), urlhash);
-					rotate(urlcache.begin(), urlindex, urlindex+1);
+				if(find(*urlcache.begin(), *urlcache.end(), urlhash) != *urlcache.end()) {
+					urlindex = find(*urlcache.begin(), *urlcache.end(), urlhash);
+					rotate(*urlcache.begin(), urlindex, urlindex+1);
 					char filename[30];
 					strcpy(filename, "cache/");
 					strcat(filename, urlhash.c_str());
@@ -145,17 +146,17 @@ int main(int argc, char* argv[]){
 					free(messagein);
 					return 1;
 				}else{
-					if (urlcache.size() == 10){
+					if (*urlcache.size() == 10){
 						cout<<"IT'S ALL FILLED UP CAP'N"<<endl;
 						char oldname[30];
 						strcpy(oldname, "cache/");
-						strcat(oldname, urlcache.back().c_str());
-						urlcache.pop_back();
+						strcat(oldname, *urlcache.back().c_str());
+						*urlcache.pop_back();
 						remove(oldname);
 						printf("Deleted %s\n", oldname);
 					}
-					urlcache.insert(urlcache.begin(), urlhash);
-					cout<<"ADDED "<<urlhash<<" TO THE CACHE; SIZE: "<<urlcache.size()<<endl;
+					*urlcache.insert(*urlcache.begin(), urlhash);
+					cout<<"ADDED "<<urlhash<<" TO THE CACHE; SIZE: "<<*urlcache.size()<<endl;
 					char filename[30];
 					strcpy(filename, "cache/");
 					strcat(filename, urlhash.c_str());
