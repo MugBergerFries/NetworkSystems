@@ -173,7 +173,7 @@ int main(int argc, char* argv[]){
                 		memcpy(&server.sin_addr, sent->h_addr, sent->h_length);
         			}
         			else if ( (server.sin_addr.s_addr = inet_addr(path.c_str())) == INADDR_NONE ){
-                		printf("can't get %s host entry: %s\n", path.substr(7, strlen(path.c_str())-8).c_str(), strerror(errno));
+                		printf("can't get %s host entry: %s\n", path.substr(7, path.substr(11).find("/", 0)+11).c_str(), strerror(errno));
                 		exit(1);
         			}
     				/* Allocate a socket */
