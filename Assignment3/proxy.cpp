@@ -165,7 +165,7 @@ int main(int argc, char* argv[]){
         			}
 
     				/* Map host name to IP address, allowing for dotted decimal */
-        			if ( sent = gethostbyname(path.c_str()) )
+        			if ( sent = gethostbyname(path.substr(7).c_str()) )
                 		memcpy(&server.sin_addr, sent->h_addr, sent->h_length);
         			else if ( (server.sin_addr.s_addr = inet_addr(path.c_str())) == INADDR_NONE ){
                 		cout<<"can't get "<<path<<" host entry"<<endl;
