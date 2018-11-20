@@ -81,11 +81,11 @@ int main(int argc, char* argv[]){
 			method = med;//In this case, this will be GET, POST, HEAD
 			med = strtok(NULL, " ");//Get after first space and before second
 			path = med;//In this case, this will be the path requested
-			med = strtok(NULL, "");
+			med = strtok(NULL, " ");
 			vers = med;//This will be the HTTP version
 			med = strtok(NULL, "\n");
 			host = med;
-			cout<<"vers is "<<vers;
+			cout<<"host is "<<vers;
 			vector<string>::iterator urlindex;
 			string urlhash = to_string(f(path));
 			if (method=="GET"){
