@@ -151,7 +151,7 @@ int main(int argc, char* argv[]){
 					strcpy(filename, "cache/");
 					strcat(filename, urlhash.c_str());
 					printf("Created %s\n", filename);
-					curfile = fopen(filename, "wb+");
+					curfile = fopen(filename, "wb");
 					int ssock, msgsize;
 					struct sockaddr_in server;
 					struct hostent *sent;
@@ -168,7 +168,7 @@ int main(int argc, char* argv[]){
         			if ( sent = gethostbyname(path.c_str()) )
                 		memcpy(&server.sin_addr, sent->h_addr, sent->h_length);
         			else if ( (server.sin_addr.s_addr = inet_addr(path.c_str())) == INADDR_NONE ){
-                		printf("can't get \"%s\" host entry\n", path);
+                		cout<<"can't get "<<path<<" host entry"<<endl;
                 		exit(1);
         			}
 
