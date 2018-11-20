@@ -152,7 +152,7 @@ int main(int argc, char* argv[]){
 					server.sin_family = AF_INET;
 					/* the following code block is from echoClient.c from Assignment1
 				    /* Map port number (char string) to port number (int)*/
-        			if ((server.sin_port=htons((unsigned short)atoi(80))) == 0)
+        			if ((server.sin_port=htons((unsigned short)80)) == 0)
                 		errexit("can't get \"%s\" port number\n", 80);
 
     				/* Map host name to IP address, allowing for dotted decimal *
