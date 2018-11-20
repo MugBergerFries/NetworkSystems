@@ -29,6 +29,7 @@ int main(int argc, char* argv[]){
 	char* messagein;
 	char* messagecpy;
 	vector<string> blockhost;
+	vector<sockaddr_in> blockip;
 	struct sockaddr_in proxy, client;//Endpoint addresses for client and proxy
 	if (argc != 3) {//Make sure there are the right amount of inputs
 		cout<<"Usage: ./webproxy <port> <timeout>"<<endl;
@@ -55,11 +56,16 @@ int main(int argc, char* argv[]){
 	string tmp;
 	inFile.open("blacklist.txt");
 	while (getline(inFile, tmp)){
-		blockhost.push_back(tmp);
+	    struct sockaddr_in sa;
+    	int result = inet_pton(AF_INET, tmp.c_str(), &(sa.sin_addr));
+    	if result != 0{
+			blockhost.push_back(tmp);
+		}
+		else{
+			blockip.push_back(sa);
+		}
 	}
-	for (vector<string>::const_iterator i = blockhost.begin(); i != blockhost.end(); ++i)
-    	cout << *i << ' ';
-    cout<<endl;
+	cout<<blockhost[0]<<" "<<blockhost[1]<<endl;
 	while (1){
 		socksize = sizeof(client);
 		csock = accept(psock, (struct sockaddr*)&client, (socklen_t*)&socksize);//Accept an incoming connetion (SYN, ACK)
@@ -98,7 +104,6 @@ int main(int argc, char* argv[]){
 			vers = med;//This will be the HTTP version
 			med = strtok(NULL, "\n");
 			host = med;
-			cout<<"host is "<<host;
 			vector<string>::iterator urlindex;
 			string urlhash = to_string(f(path));
 			if (method=="GET"){
@@ -186,13 +191,22 @@ int main(int argc, char* argv[]){
         			}
 
     				/* Map host name to IP address, allowing for dotted decimal */
-    				cout<<" - hostname is "<<path.substr(7).find("/", 0)<<endl;
         			if ( sent = gethostbyname(path.substr(7, path.substr(7).find("/", 0)).c_str()) ){
                 		memcpy(&server.sin_addr, sent->h_addr, sent->h_length);
         			}
         			else if ( (server.sin_addr.s_addr = inet_addr(path.c_str())) == INADDR_NONE ){
                 		printf("can't get %s host entry: %s\n", path.substr(7, path.substr(7).find("/", 0)).c_str(), strerror(errno));
                 		exit(1);
+        			}
+        			cout<<"TESTING: "<<inet_ntop(server.sin_addr.s_addr)<<endl;
+        			if ((blockhost.find(blockhost.begin(), blockhost.end(), path.substr(7, path.substr(7).find("/", 0)), 0) != blockhost.end()) || (blockhost.find(blockhost.begin(), blockhost.end(), inet_ntop(server.sin_addr.s_addr), 0) != blockhost.end()){
+						perror("ERROR: page blacklisted");
+						cout<<"Path in question (not absolute): "<<path<<endl<<endl;
+						char fileout[5000] = "HTTP/1.1 403 Forbidden\r\n\r\n";
+						write(csock, fileout, strlen(fileout));
+						close(csock);
+						free(messagein);
+						return 1;
         			}
     				/* Allocate a socket */
         			ssock = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP);
