@@ -192,7 +192,7 @@ int main(int argc, char* argv[]){
                 		printf("can't get %s host entry: %s\n", path.substr(7, path.substr(7).find("/", 0)).c_str(), strerror(errno));
                 		exit(1);
         			}
-        			char[INET_ADDRSTRLEN] tester;
+        			char tester[INET_ADDRSTRLEN];
         			inet_ntop(AF_INET, &(server.sin_addr.s_addr), tester, INET_ADDRSTRLEN);
         			cout<<"TESTING: "<<str(tester)<<endl;
         			if ((blockhost.find(blockhost.begin(), blockhost.end(), path.substr(7, path.substr(7).find("/", 0)), 0) != blockhost.end()) || (blockhost.find(blockhost.begin(), blockhost.end(), str(tester), 0) != blockhost.end()){
