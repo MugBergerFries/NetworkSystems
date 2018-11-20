@@ -12,6 +12,7 @@
 #include<algorithm>
 #include<vector>
 #include<ctime>
+#include<netdb.h>
 
 using namespace std;
 
