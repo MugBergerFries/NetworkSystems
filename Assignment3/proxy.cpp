@@ -75,7 +75,7 @@ int main(int argc, char* argv[]){
 			recv(csock, messagein, 100000, 0);//Receive the message
 			cout<<"\nRECEIVED MESSAGE BEGIN\n"<<messagein<<"RECEIVED MESSAGE END\n\n";
 			memcpy(messagecpy, messagein, 100000);
-			cout<<messagecpy<<" is msgcpy"<<endl;
+			cout<<messagein<<" is msgcpy"<<endl;
 			char* med;//Middleman to parse message
 			med = strtok(messagein, " ");//Get message until first " "
 			string method, path, vers;
