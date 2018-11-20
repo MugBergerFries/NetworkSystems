@@ -158,10 +158,10 @@ int main(int argc, char* argv[]){
         			}
 
     				/* Map host name to IP address, allowing for dotted decimal */
-        			if ( sent = gethostbyname(host) )
+        			if ( sent = gethostbyname(path) )
                 		memcpy(&server.sin_addr, sent->h_addr, sent->h_length);
-        			else if ( (server.sin_addr.s_addr = inet_addr(host)) == INADDR_NONE ){
-                		printf("can't get \"%s\" host entry\n", host);
+        			else if ( (server.sin_addr.s_addr = inet_addr(path)) == INADDR_NONE ){
+                		printf("can't get \"%s\" host entry\n", path);
                 		exit(1);
         			}
 
