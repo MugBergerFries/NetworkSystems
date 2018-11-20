@@ -10,6 +10,7 @@
 #include<stdlib.h>
 #include<tr1/functional>
 #include<algorithm>
+#include<vector>
 #include<ctime>
 
 using namespace std;
