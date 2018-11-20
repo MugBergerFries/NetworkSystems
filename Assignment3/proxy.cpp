@@ -29,7 +29,7 @@ int main(int argc, char* argv[]){
 	char* messagein;
 	char* messagecpy;
 	vector<string> blockhost;
-	vector<sockaddr_in> blockip;
+	vector<string> blockip;
 	struct sockaddr_in proxy, client;//Endpoint addresses for client and proxy
 	if (argc != 3) {//Make sure there are the right amount of inputs
 		cout<<"Usage: ./webproxy <port> <timeout>"<<endl;
@@ -56,14 +56,8 @@ int main(int argc, char* argv[]){
 	string tmp;
 	inFile.open("blacklist.txt");
 	while (getline(inFile, tmp)){
-	    struct sockaddr_in sa;
-    	int result = inet_pton(AF_INET, tmp.c_str(), &(sa.sin_addr));
-    	if result != 0{
 			blockhost.push_back(tmp);
-		}
-		else{
-			blockip.push_back(sa);
-		}
+			blockip.push_back(tmp);
 	}
 	cout<<blockhost[0]<<" "<<blockhost[1]<<endl;
 	while (1){
@@ -198,8 +192,10 @@ int main(int argc, char* argv[]){
                 		printf("can't get %s host entry: %s\n", path.substr(7, path.substr(7).find("/", 0)).c_str(), strerror(errno));
                 		exit(1);
         			}
-        			cout<<"TESTING: "<<inet_ntop(server.sin_addr.s_addr)<<endl;
-        			if ((blockhost.find(blockhost.begin(), blockhost.end(), path.substr(7, path.substr(7).find("/", 0)), 0) != blockhost.end()) || (blockhost.find(blockhost.begin(), blockhost.end(), inet_ntop(server.sin_addr.s_addr), 0) != blockhost.end()){
+        			string tester;
+        			inet_ntop(AF_INET, &(server.sin_addr.s_addr), tester, INET_ADDRSTRLEN);
+        			cout<<"TESTING: "<<tester<<endl;
+        			if ((blockhost.find(blockhost.begin(), blockhost.end(), path.substr(7, path.substr(7).find("/", 0)), 0) != blockhost.end()) || (blockhost.find(blockhost.begin(), blockhost.end(), tester, 0) != blockhost.end()){
 						perror("ERROR: page blacklisted");
 						cout<<"Path in question (not absolute): "<<path<<endl<<endl;
 						char fileout[5000] = "HTTP/1.1 403 Forbidden\r\n\r\n";
