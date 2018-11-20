@@ -84,7 +84,7 @@ int main(int argc, char* argv[]){
 			if (method=="GET"){
 				if(urlindex = find(urlcache.begin(), urlcache.end(), urlhash) != urlcache.end()) {
 					rotate(urlcache.begin(), urlcache.begin()+urlindex, urlcache.begin()+urlindex+1);
-					curfile = fopen("cache/"+urlhash, "rb");
+					curfile = fopen(strcat("cache/", urlhash), "rb");
 					if (fseek(curfile, 0, SEEK_END) != 0) perror("ERROR: Fseek failed");
 					filesize = ftello(curfile);//Seek to end of file and report position to get file size
 					rewind(curfile);//Reset file location pointer
@@ -135,7 +135,7 @@ int main(int argc, char* argv[]){
 					urlcache.pop_back();
 					remove("cache/"+urlhash);
 					urlcache.insert(urlcache.begin(), urlhash);
-					curfile = fopen("cache/"+urlhash, "wb+");
+					curfile = fopen(strcat("cache/", urlhash), "wb+");
 					int ssock, msgsize;
 					struct sockaddr_in server;
 					struct hostent *sent;
