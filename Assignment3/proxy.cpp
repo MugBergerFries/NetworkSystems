@@ -185,8 +185,8 @@ int main(int argc, char* argv[]){
             			exit(1);
         			}
         			int test;
+        			cout<<messagein<<" - PLS"<<endl;
             		test = write(ssock, messagein, sizeof(messagein));
-            		cout<<"WTF IS THIS: "<<test<<endl;
             		while((msgsize = recv(ssock, messagein, 100000, 0)) > 0){
             			cout<<messagein;
             			write(csock, messagein, 100000);
