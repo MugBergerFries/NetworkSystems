@@ -168,7 +168,7 @@ int main(int argc, char* argv[]){
         			}
 
     				/* Map host name to IP address, allowing for dotted decimal */
-    				//cout<<strlen(path.c_str())<<" - hostname is "<<path.substr(7, strlen(path.c_str())-8).c_str()<<endl;
+    				cout<<" - hostname is "<<path.substr(7).find("/", 0)<<endl;
         			if ( sent = gethostbyname(path.substr(7, path.substr(7).find("/", 0)+7).c_str()) ){
                 		memcpy(&server.sin_addr, sent->h_addr, sent->h_length);
         			}
