@@ -169,11 +169,11 @@ int main(int argc, char* argv[]){
 
     				/* Map host name to IP address, allowing for dotted decimal */
     				cout<<" - hostname is "<<path.substr(7).find("/", 0)<<endl;
-        			if ( sent = gethostbyname(path.substr(7, path.substr(7).find("/", 0)+7).c_str()) ){
+        			if ( sent = gethostbyname(path.substr(7, path.substr(7).find("/", 0)).c_str()) ){
                 		memcpy(&server.sin_addr, sent->h_addr, sent->h_length);
         			}
         			else if ( (server.sin_addr.s_addr = inet_addr(path.c_str())) == INADDR_NONE ){
-                		printf("can't get %s host entry: %s\n", path.substr(7, path.substr(7).find("/", 0)+7).c_str(), strerror(errno));
+                		printf("can't get %s host entry: %s\n", path.substr(7, path.substr(7).find("/", 0)).c_str(), strerror(errno));
                 		exit(1);
         			}
     				/* Allocate a socket */
