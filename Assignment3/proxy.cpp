@@ -144,7 +144,8 @@ int main(int argc, char* argv[]){
 					free(messagein);
 					return 1;
 				}else{
-					if (urlcache.size() == 100){
+					if (urlcache.size() == 10){
+						cout<<"IT'S ALL FILLED UP CAP'N"<<endl;
 						char oldname[30];
 						strcpy(oldname, "cache/");
 						strcat(oldname, urlcache.back().c_str());
@@ -153,6 +154,7 @@ int main(int argc, char* argv[]){
 						printf("Deleted %s\n", oldname);
 					}
 					urlcache.insert(urlcache.begin(), urlhash);
+					cout<<"ADDED "<<urlhash<<" TO THE CACHE; SIZE: "<<urlcache.size()<<endl;
 					char filename[30];
 					strcpy(filename, "cache/");
 					strcat(filename, urlhash.c_str());
