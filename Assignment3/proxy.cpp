@@ -91,9 +91,9 @@ int main(int argc, char* argv[]){
 			vector<string>::iterator urlindex;
 			string urlhash = to_string(f(path));
 			if (method=="GET"){
-				if(find(*cacheaddr.begin(), *cacheaddr.end(), urlhash) != *cacheaddr.end()) {
-					urlindex = find(*cacheaddr.begin(), *cacheaddr.end(), urlhash);
-					rotate(*cacheaddr.begin(), urlindex, urlindex+1);
+				if(find(*cacheaddr->begin(), *cacheaddr->end(), urlhash) != *cacheaddr->end()) {
+					urlindex = find(*cacheaddr->begin(), *cacheaddr->end(), urlhash);
+					rotate(*cacheaddr->begin(), urlindex, urlindex+1);
 					char filename[30];
 					strcpy(filename, "cache/");
 					strcat(filename, urlhash.c_str());
@@ -146,17 +146,17 @@ int main(int argc, char* argv[]){
 					free(messagein);
 					return 1;
 				}else{
-					if (*cacheaddr.size() == 10){
+					if (*cacheaddr->size() == 10){
 						cout<<"IT'S ALL FILLED UP CAP'N"<<endl;
 						char oldname[30];
 						strcpy(oldname, "cache/");
-						strcat(oldname, *cacheaddr.back().c_str());
-						*cacheaddr.pop_back();
+						strcat(oldname, *cacheaddr->back().c_str());
+						*cacheaddr->pop_back();
 						remove(oldname);
 						printf("Deleted %s\n", oldname);
 					}
-					*cacheaddr.insert(*cacheaddr.begin(), urlhash);
-					cout<<"ADDED "<<urlhash<<" TO THE CACHE; SIZE: "<<*cacheaddr.size()<<endl;
+					*cacheaddr->insert(*cacheaddr->begin(), urlhash);
+					cout<<"ADDED "<<urlhash<<" TO THE CACHE; SIZE: "<<*cacheaddr->size()<<endl;
 					char filename[30];
 					strcpy(filename, "cache/");
 					strcat(filename, urlhash.c_str());
