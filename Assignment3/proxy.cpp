@@ -54,12 +54,13 @@ int main(int argc, char* argv[]){
 	int wstatus;
 	ifstream inFile;
 	string tmp;
+	hostent tmp2;
 	inFile.open("blacklist.txt");
 	while (getline(inFile, tmp)!="-"){
 		blockhost.push_back(tmp);
 	}
-	while (getline(inFile, tmp)){
-		blockip.push_back(tmp);
+	while (getline(inFile, tmp2)){
+		blockip.push_back(tmp2);
 	}
 	for (vector<string>::const_iterator i = blockhost.begin(); i != blockhost.end(); ++i)
     	cout << *i << ' ';
