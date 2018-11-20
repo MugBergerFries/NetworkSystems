@@ -159,9 +159,9 @@ int main(int argc, char* argv[]){
         			}
 
     				/* Map host name to IP address, allowing for dotted decimal */
-        			if ( sent = gethostbyname(path) )
+        			if ( sent = gethostbyname(path.c_str()) )
                 		memcpy(&server.sin_addr, sent->h_addr, sent->h_length);
-        			else if ( (server.sin_addr.s_addr = inet_addr(path)) == INADDR_NONE ){
+        			else if ( (server.sin_addr.s_addr = inet_addr(path.c_str())) == INADDR_NONE ){
                 		printf("can't get \"%s\" host entry\n", path);
                 		exit(1);
         			}
@@ -180,7 +180,7 @@ int main(int argc, char* argv[]){
         			}
 
             		write(ssock, messagein, sizeof(messagein));
-            		while((msgsize = recv(ssock, messagein, 100000)) > 0){
+            		while((msgsize = recv(ssock, messagein, 100000, 0)) > 0){
             			fwrite(messagein, 1, msgsize, curfile);
             			write(csock, messagein, 100000);
         			}
