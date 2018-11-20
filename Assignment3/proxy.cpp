@@ -19,6 +19,7 @@ int main(int argc, char* argv[]){
 	int port, socksize; //webproxy port
 	int psock, csock; //proxy and client socket
 	FILE* curfile;
+	char* messagein;
 	vector<string> urlcache;
 	vector<int> tbd;
 	struct sockaddr_in proxy, client;//Endpoint addresses for client and proxy
@@ -77,8 +78,8 @@ int main(int argc, char* argv[]){
 			path = med;//In this case, this will be the path requested
 			med = strtok(NULL, " ");
 			vers = med;//This will be the HTTP version
-			urlindex;
-			urlhash = hash(path);
+			int urlindex;
+			string urlhash = hash(path);
 			if (method=="GET"){
 				if(urlindex = find(urlcache.begin(), urlcache.end(), urlhash) != urlcache.end()) {
 					rotate(urlcache.begin(), urlindex, urlindex+1);
