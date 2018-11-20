@@ -171,7 +171,6 @@ int main(int argc, char* argv[]){
                 		cout<<"can't get "<<path<<" host entry"<<endl;
                 		exit(1);
         			}
-        			cout<<"Got host by name"<<endl;
     				/* Allocate a socket */
         			int s = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP);
         			if (s < 0){
@@ -184,8 +183,9 @@ int main(int argc, char* argv[]){
             			printf("can't connect to %s.80: %s\n", path, strerror(errno));
             			exit(1);
         			}
-
-            		write(ssock, messagein, sizeof(messagein));
+        			int test;
+            		test = write(ssock, messagein, sizeof(messagein));
+            		cout<<test<<endl;
             		while((msgsize = recv(ssock, messagein, 100000, 0)) > 0){
             			fwrite(messagein, 1, msgsize, curfile);
             			write(csock, messagein, 100000);
