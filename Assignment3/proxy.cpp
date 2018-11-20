@@ -75,7 +75,6 @@ int main(int argc, char* argv[]){
 			recv(csock, messagein, 100000, 0);//Receive the message
 			cout<<"\nRECEIVED MESSAGE BEGIN\n"<<messagein<<"RECEIVED MESSAGE END\n\n";
 			memcpy(messagecpy, messagein, 100000);
-			cout<<messagein<<" is msgcpy"<<endl;
 			char* med;//Middleman to parse message
 			med = strtok(messagein, " ");//Get message until first " "
 			string method, path, vers;
@@ -189,8 +188,8 @@ int main(int argc, char* argv[]){
             			exit(1);
         			}
         			int test;
-        			cout<<messagecpy<<" - PLS"<<endl;
             		test = write(ssock, messagecpy, sizeof(messagecpy));
+            		cout<<"test is "<<test<<endl;
             		while((msgsize = recv(ssock, messagecpy, 100000, 0)) > 0){
 						fwrite(messagecpy, 1, 100000, curfile);//Write form buffer to file
             			write(csock, messagecpy, 100000);
