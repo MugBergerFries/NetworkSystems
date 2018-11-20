@@ -191,7 +191,7 @@ int main(int argc, char* argv[]){
        				cout<<"sending bytes: "<<strlen(messagecpy)<<endl;
             		test = write(ssock, messagecpy, strlen(messagecpy));
             		cout<<"test is "<<test<<endl;
-            		string final = "GET " + path.substr(find("/", path.substr(11))) + " " + vers + "\r\n\r\n";
+            		string final = "GET " + path.substr(path.substr(11).find("/", 0)) + " " + vers + "\r\n\r\n";
             		cout<<final<<" is final"<<endl;
             		while((msgsize = recv(ssock, messagecpy, 100000, 0)) > 0){
             			cout<<"Reply received: size = "<<msgsize<<endl;
