@@ -17,7 +17,7 @@ using namespace std;
 
 int main(int argc, char* argv[]){
 	hash<string> f;
-	int port, socksize; //webproxy port
+	int port, socksize, filesize; //webproxy port
 	int psock, csock; //proxy and client socket
 	FILE* curfile;
 	char* messagein;
@@ -96,7 +96,7 @@ int main(int argc, char* argv[]){
 					filebytes = fread(filedata, 1, filesize, curfile);//Read file into buffer
 					char sizebuf[sizeof(int)];
 					sprintf(sizebuf, "%d", filesize);//Turn filesize into char array
-					char* med2;//Middleman to parse file type
+					/*char* med2;//Middleman to parse file type
 					char* pathtmp = new char [path.length()+1];
 					strcpy(pathtmp, path.c_str());//Turn path into a char array
 					strtok(pathtmp, ".");//Parse path delimited by .
@@ -125,10 +125,10 @@ int main(int argc, char* argv[]){
 					int headersize = strlen(filehead); //Size in bytes of the header
 					char send[filebytes+headersize]; //Final buffer for the message out
 					memcpy(send, filehead, headersize);//Copy the header to the beginning of the buffer (this is to avoid NULL char issues with strcpy)
-					memcpy(send+headersize, filedata, filebytes);//Copy the file data to the location right after the header
-					write(csock, send, filebytes+headersize);//Send the data
+					memcpy(send+headersize, filedata, filebytes);//Copy the file data to the location right after the header*/
+					write(csock, filedata, filebytes);//Send the data
 					free(filedata);
-					free(filehead);
+					//free(filehead);
 					shutdown(csock, SHUT_WR);//Tell client we want to close the connection
 					while (recv(csock, messagein, 100000, 0)!=0){}//Wait for them to be ready
 					close(csock);//Close the connection
@@ -138,7 +138,10 @@ int main(int argc, char* argv[]){
 					urlcache.pop_back();
 					remove("cache/"+urlhash);
 					urlcache.insert(urlcache.begin(), urlhash);
-					curfile = fopen(strcat("cache/", urlhash), "wb+");
+					char filename[30];
+					strcpy(filename, "cache/");
+					strcat(filename, urlhash.c_str());
+					curfile = fopen(filename, "wb+");
 					int ssock, msgsize;
 					struct sockaddr_in server;
 					struct hostent *sent;
