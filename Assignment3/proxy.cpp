@@ -152,8 +152,10 @@ int main(int argc, char* argv[]){
 					server.sin_family = AF_INET;
 					/* the following code block is from echoClient.c from Assignment1
 				    /* Map port number (char string) to port number (int)*/
-        			if ((server.sin_port=htons((unsigned short)80)) == 0)
-                		errexit("can't get \"%s\" port number\n", 80);
+        			if ((server.sin_port=htons((unsigned short)80)) == 0){
+                		printf("can't get \"%s\" port number\n", 80);
+                		exit(1);
+        			}
 
     				/* Map host name to IP address, allowing for dotted decimal *
         			if ( sent = gethostbyname(host) )
@@ -163,12 +165,16 @@ int main(int argc, char* argv[]){
 
     				/* Allocate a socket */
         			s = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP);
-        			if (s < 0)
-                		errexit("can't create socket: %s\n", strerror(errno));
+        			if (s < 0){
+                		printf("can't create socket: %s\n", strerror(errno));
+                		exit(1);
+        			}
 
     				/* Connect the socket */
-        			if (connect(s, (struct sockaddr *)&server, sizeof(server)) < 0)
-            			errexit("can't connect to %s.%s: %s\n", host, portnum, strerror(errno));
+        			if (connect(s, (struct sockaddr *)&server, sizeof(server)) < 0){
+            			printf("can't connect to %s.%s: %s\n", host, portnum, strerror(errno));
+            			exit(1);
+        			}
 
             		write(ssock, messagein, sizeof(messagein));
             		while((msgsize = recv(ssock, messagein, 100000)) > 0){
