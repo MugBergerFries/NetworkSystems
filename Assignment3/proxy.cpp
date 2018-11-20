@@ -127,7 +127,7 @@ int main(int argc, char* argv[]){
 					free(messagein);
 					return 1;
 				}else{
-					curfile = fopen("cache/"+urlhash, wb);
+					curfile = fopen("cache/"+urlhash, "wb+");
 					int ssock, msgsize;
 					struct sockaddr_in server;
 					struct hostent *sent;
@@ -154,150 +154,18 @@ int main(int argc, char* argv[]){
             			errexit("can't connect to %s.%s: %s\n", host, portnum, strerror(errno));
 
             		write(ssock, messagein, sizeof(messagein));
-            		recv(ssock, messagein, sizeof)
-    				if (fseek(curfile, 0, SEEK_END) != 0) perror("ERROR: Fseek failed");
-					filesize = ftello(curfile);//Seek to end of file and report position to get file size
-					rewind(curfile);//Reset file location pointer
-					char* filedata = (char*)malloc(filesize);//Buffer to read file into
-					int filebytes;//Bytes read in from file (should equal filesize)
-					filebytes = fread(filedata, 1, filesize, curfile);//Read file into buffer
-					char sizebuf[sizeof(int)];
-					sprintf(sizebuf, "%d", filesize);//Turn filesize into char array
-					char* med2;//Middleman to parse file type
-					char* pathtmp = new char [path.length()+1];
-					strcpy(pathtmp, path.c_str());//Turn path into a char array
-					strtok(pathtmp, ".");//Parse path delimited by .
-					char *med2tmp;
-					while ((med2tmp=strtok(NULL, "."))!=NULL){//Read until the last '.'
-						med2 = med2tmp;//Get the file extension
-					}
-					int ans=-1;
-					for (int i=0;i<7;i++){
-						if (!strcmp(med2, types[i])) ans=i;//Find the file type from the hard-coded list on line 15
-					}
-					if (ans==-1){
-						cout<<"ERROR: file type not recognized: "<<med2<<endl;
-						char fileout[5000] = "HTTP/1.1 500 Internal Server Error";
-						write(csock, fileout, strlen(fileout));
-						close(csock);
-						free(messagein);
-						return 1;
-					}
-					char *filehead = (char*)malloc(500);//Malloc buffer for the file header
-					strcpy(filehead, "HTTP/1.1 200 Document Follows\r\nContent-Type: ");
-					strcat(filehead, corrosponding[ans]);//Set Content-Type to matching field from the list on line 16
-					strcat(filehead, "\r\nContent-Length: ");
-					strcat(filehead, sizebuf);
-					strcat(filehead, "\r\n\r\n");
-					int headersize = strlen(filehead); //Size in bytes of the header
-					char send[filebytes+headersize]; //Final buffer for the message out
-					memcpy(send, filehead, headersize);//Copy the header to the beginning of the buffer (this is to avoid NULL char issues with strcpy)
-					memcpy(send+headersize, filedata, filebytes);//Copy the file data to the location right after the header
-					write(csock, send, filebytes+headersize);//Send the data
-					free(filedata);
-					free(filehead);
+            		while((msgsize = recv(ssock, messagein, 100000)) > 0){
+            			fwrite(messagein, 1, msgsize, curfile);
+            			write(csock, messagein, 100000);
+        			}
+					shutdown(ssock, SHUT_WR);//Tell client we want to close the connection
+					while (recv(ssock, messagein, 100000, 0)!=0){}//Wait for them to be ready
+					close(ssock);//Close the connection
 					shutdown(csock, SHUT_WR);//Tell client we want to close the connection
 					while (recv(csock, messagein, 100000, 0)!=0){}//Wait for them to be ready
 					close(csock);//Close the connection
 					free(messagein);
 					return 1;
-				}
-				if (path=="/" || path=="/inside/"){//If we need to send index.html
-					curfile = fopen("./www/index.html", "rb");//Open index in read binary mode (for NULL characters)
-					if (curfile!=NULL){//If file is open
-						if (fseek(curfile, 0, SEEK_END) != 0) perror("ERROR: Fseek failed");
-						filesize = ftello(curfile);//Seek to end of file and report position to get file size
-						rewind(curfile);//Reset file location pointer
-						char* filedata = (char*)malloc(filesize);//Allocate buffer to store the file
-						fread(filedata, 1, filesize, curfile);//Read file into buffer
-						char sizebuf[sizeof(int)];
-						sprintf(sizebuf, "%d", filesize);//Convert file size in bytes to char array
-						char fileout[5000] = "HTTP/1.1 200 Document Follows\r\nContent-Type: text/html\r\nContent-Length: ";
-						strcat(fileout, sizebuf);
-						strcat(fileout, "\r\n\r\n");
-						strcat(fileout, filedata);//Combine header and file data
-						write(csock, fileout, strlen(fileout));//Send the message
-						free(filedata);//deallocate 
-						shutdown(csock, SHUT_WR);//Tell client we want to close connection
-						while (recv(csock, messagein, 100000, 0)!=0){}//Wait for client to be ready
-						close(csock);//Close connection
-						free(messagein);//Deallocate message buffer
-						return 1;
-					}
-					else{
-						perror("ERROR: index file");
-						cout<<"Path in question (not absolute): "<<path<<endl<<endl;
-						char fileout[5000] = "HTTP/1.1 500 Internal Server Error";
-						write(csock, fileout, strlen(fileout));
-						close(csock);
-						free(messagein);
-						return 1;
-					}
-				}
-				else{
-					char* abspath = new char [path.length()+4];//Absolute path to the requested file
-					char* pathcstr = new char [path.length()+1];//char array conversion of the path
-					strcpy(pathcstr, path.c_str());
-					strcpy(abspath, "www");
-					strcat(abspath, pathcstr);//Take incoming path, add www to the front
-					curfile = fopen(abspath, "rb");//Open the requested file
-					if (curfile!=NULL){//If file is open
-						if (fseek(curfile, 0, SEEK_END) != 0) perror("ERROR: Fseek failed");
-						filesize = ftello(curfile);//Seek to end of file and report position to get file size
-						rewind(curfile);//Reset file location pointer
-						char* filedata = (char*)malloc(filesize);//Buffer to read file into
-						int filebytes;//Bytes read in from file (should equal filesize)
-						filebytes = fread(filedata, 1, filesize, curfile);//Read file into buffer
-						char sizebuf[sizeof(int)];
-						sprintf(sizebuf, "%d", filesize);//Turn filesize into char array
-						char* med2;//Middleman to parse file type
-						char* pathtmp = new char [path.length()+1];
-						strcpy(pathtmp, path.c_str());//Turn path into a char array
-						strtok(pathtmp, ".");//Parse path delimited by .
-						char *med2tmp;
-						while ((med2tmp=strtok(NULL, "."))!=NULL){//Read until the last '.'
-							med2 = med2tmp;//Get the file extension
-						}
-						int ans=-1;
-						for (int i=0;i<7;i++){
-							if (!strcmp(med2, types[i])) ans=i;//Find the file type from the hard-coded list on line 15
-						}
-						if (ans==-1){
-							cout<<"ERROR: file type not recognized: "<<med2<<endl;
-							char fileout[5000] = "HTTP/1.1 500 Internal Server Error";
-							write(csock, fileout, strlen(fileout));
-							close(csock);
-							free(messagein);
-							return 1;
-						}
-						char *filehead = (char*)malloc(500);//Malloc buffer for the file header
-						strcpy(filehead, "HTTP/1.1 200 Document Follows\r\nContent-Type: ");
-						strcat(filehead, corrosponding[ans]);//Set Content-Type to matching field from the list on line 16
-						strcat(filehead, "\r\nContent-Length: ");
-						strcat(filehead, sizebuf);
-						strcat(filehead, "\r\n\r\n");
-						int headersize = strlen(filehead); //Size in bytes of the header
-						char send[filebytes+headersize]; //Final buffer for the message out
-						memcpy(send, filehead, headersize);//Copy the header to the beginning of the buffer (this is to avoid NULL char issues with strcpy)
-						memcpy(send+headersize, filedata, filebytes);//Copy the file data to the location right after the header
-						write(csock, send, filebytes+headersize);//Send the data
-						free(filedata);
-						free(filehead);
-						shutdown(csock, SHUT_WR);//Tell client we want to close the connection
-						while (recv(csock, messagein, 100000, 0)!=0){}//Wait for them to be ready
-						close(csock);//Close the connection
-						free(messagein);
-						return 1;
-					}
-					else{
-						perror("ERROR: failed to open file");
-						cout<<"Path in question: "<<abspath<<endl<<endl;
-						char fileout[38] = "HTTP/1.1 500 Internal Server Error";
-						write(csock, fileout, 38);
-						close(csock);
-						free(messagein);
-						return 1;
-					}
 				}
 			}
 			else{
