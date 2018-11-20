@@ -176,14 +176,14 @@ int main(int argc, char* argv[]){
                 		exit(1);
         			}
     				/* Allocate a socket */
-        			int s = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP);
-        			if (s < 0){
+        			ssock = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP);
+        			if (ssock < 0){
                 		printf("can't create socket: %s\n", strerror(errno));
                 		exit(1);
         			}
 
     				/* Connect the socket */
-        			if (connect(s, (struct sockaddr *)&server, sizeof(server)) < 0){
+        			if (connect(ssock, (struct sockaddr *)&server, sizeof(server)) < 0){
             			printf("can't connect to %s.80: %s\n", path.c_str(), strerror(errno));
             			exit(1);
         			}
@@ -191,7 +191,7 @@ int main(int argc, char* argv[]){
        				cout<<"sending bytes: "<<strlen(messagecpy)<<endl;
             		test = write(ssock, messagecpy, strlen(messagecpy));
             		cout<<"test is "<<test<<endl;
-            		while((msgsize = recv(csock, messagecpy, 100000, 0)) > 0){
+            		while((msgsize = recv(ssock, messagecpy, 100000, 0)) > 0){
             			cout<<"Reply received: size = "<<msgsize<<endl;
 						fwrite(messagecpy, 1, 100000, curfile);//Write form buffer to file
             			cout<<"Wrote to file"<<msgsize<<endl;
