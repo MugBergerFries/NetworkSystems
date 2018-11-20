@@ -79,7 +79,7 @@ int main(int argc, char* argv[]){
 			med = strtok(NULL, " ");
 			vers = med;//This will be the HTTP version
 			int urlindex;
-			string urlhash = hash(path);
+			string urlhash = f(path);
 			if (method=="GET"){
 				if(urlindex = find(urlcache.begin(), urlcache.end(), urlhash) != urlcache.end()) {
 					rotate(urlcache.begin(), urlindex, urlindex+1);
