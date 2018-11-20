@@ -146,6 +146,7 @@ int main(int argc, char* argv[]){
 						remove(oldname);
 						printf("Deleted %s\n", oldname);
 					}
+            		cout<<"can't get "<<path.substr(7).c_str()<<" host entry"<<endl;
 					urlcache.insert(urlcache.begin(), urlhash);
 					char filename[30];
 					strcpy(filename, "cache/");
