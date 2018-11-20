@@ -10,6 +10,7 @@
 #include<stdlib.h>
 #include<tr1/functional>
 #include<algorithm>
+#include<ctime>
 
 using namespace std;
 
@@ -18,7 +19,8 @@ int main(int argc, char* argv[]){
 	int port, socksize; //webproxy port
 	int psock, csock; //proxy and client socket
 	FILE* curfile;
-	vector<vector<string>> urlcache;
+	vector<string> urlcache;
+	vector<int> tbd;
 	struct sockaddr_in proxy, client;//Endpoint addresses for client and proxy
 	if (argc != 3) {//Make sure there are the right amount of inputs
 		cout<<"Usage: ./webproxy <port> <timeout>"<<endl;
@@ -79,6 +81,7 @@ int main(int argc, char* argv[]){
 			urlhash = hash(path);
 			if (method=="GET"){
 				if(urlindex = find(urlcache.begin(), urlcache.end(), urlhash) != urlcache.end()) {
+					rotate(urlcache.begin(), urlindex, urlindex+1);
 					curfile = fopen("cache/"+urlhash, "rb");
 					if (fseek(curfile, 0, SEEK_END) != 0) perror("ERROR: Fseek failed");
 					filesize = ftello(curfile);//Seek to end of file and report position to get file size
@@ -127,6 +130,9 @@ int main(int argc, char* argv[]){
 					free(messagein);
 					return 1;
 				}else{
+					urlcache.pop_back();
+					remove("cache/"+urlhash);
+					urlcache.insert(urlcache.begin(), urlhash);
 					curfile = fopen("cache/"+urlhash, "wb+");
 					int ssock, msgsize;
 					struct sockaddr_in server;
