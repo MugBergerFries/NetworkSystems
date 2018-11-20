@@ -19,7 +19,7 @@ using namespace std;
 vector<string> urlcache;
 
 int main(int argc, char* argv[]){
-	cacheaddr = &urlcache;
+	vector<string>* cacheaddr = &urlcache;
 	hash<string> f;
 	int port, socksize, filesize; //webproxy port
 	int psock, csock; //proxy and client socket
