@@ -70,8 +70,10 @@ int main(int argc, char* argv[]){
 		else{ //We're the child process
 			close(psock);//Close the parent's connection
 			messagein = (char*)malloc(100000);//Allocate memory for the incoming message
+			messagecpy = (char*)malloc(100000);//Allocate memory for the incoming message
 			recv(csock, messagein, 100000, 0);//Receive the message
 			cout<<"\nRECEIVED MESSAGE BEGIN\n\n"<<messagein<<"RECEIVED MESSAGE END\n\n";
+			strcpy(messagecpy, messagein);
 			char* med;//Middleman to parse message
 			med = strtok(messagein, " ");//Get message until first " "
 			string method, path, vers;
@@ -185,11 +187,11 @@ int main(int argc, char* argv[]){
             			exit(1);
         			}
         			int test;
-        			cout<<messagein<<" - PLS"<<endl;
-            		test = write(ssock, messagein, sizeof(messagein));
-            		while((msgsize = recv(ssock, messagein, 100000, 0)) > 0){
-            			cout<<messagein;
-            			write(csock, messagein, 100000);
+        			cout<<messagecpy<<" - PLS"<<endl;
+            		test = write(ssock, messagecpy, sizeof(messagecpy));
+            		while((msgsize = recv(ssock, messagecpy, 100000, 0)) > 0){
+            			curfile<<messagecpy;
+            			write(csock, messagecpy, 100000);
         			}
 					shutdown(ssock, SHUT_WR);//Tell client we want to close the connection
 					while (recv(ssock, messagein, 100000, 0)!=0){}//Wait for them to be ready
@@ -198,6 +200,7 @@ int main(int argc, char* argv[]){
 					while (recv(csock, messagein, 100000, 0)!=0){}//Wait for them to be ready
 					close(csock);//Close the connection
 					free(messagein);
+					free(messagecpy);
 					return 1;
 				}
 			}
