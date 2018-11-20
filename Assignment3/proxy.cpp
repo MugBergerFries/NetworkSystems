@@ -146,7 +146,6 @@ int main(int argc, char* argv[]){
 						remove(oldname);
 						printf("Deleted %s\n", oldname);
 					}
-            		cout<<"can't get "<<path.substr(7).c_str()<<" host entry"<<endl;
 					urlcache.insert(urlcache.begin(), urlhash);
 					char filename[30];
 					strcpy(filename, "cache/");
@@ -169,7 +168,7 @@ int main(int argc, char* argv[]){
         			if ( sent = gethostbyname(path.substr(7).c_str()) )
                 		memcpy(&server.sin_addr, sent->h_addr, sent->h_length);
         			else if ( (server.sin_addr.s_addr = inet_addr(path.c_str())) == INADDR_NONE ){
-                		cout<<"can't get "<<path.substr(7).c_str()<<" host entry"<<endl;
+                		cout<<"can't get "<<path.substr(7).c_str()<<" host entry: "<<strerror(errno)<<endl;
                 		exit(1);
         			}
     				/* Allocate a socket */
