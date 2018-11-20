@@ -13,6 +13,7 @@
 #include<vector>
 #include<ctime>
 #include<netdb.h>
+#include<fstream>
 
 using namespace std;
 
