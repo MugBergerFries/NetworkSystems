@@ -73,21 +73,16 @@ int main(int argc, char* argv[]){
 			recv(csock, messagein, 100000, 0);//Receive the message
 			cout<<"\nRECEIVED MESSAGE BEGIN\n\n"<<messagein<<"RECEIVED MESSAGE END\n\n";
 			char* med;//Middleman to parse message
-			cout<<"test"<<endl;
 			med = strtok(messagein, " ");//Get message until first " "
-			cout<<med<<endl;
 			string method, path, vers;
 			method = med;//In this case, this will be GET, POST, HEAD
 			med = strtok(NULL, " ");//Get after first space and before second
-			cout<<med<<endl;
 			path = med;//In this case, this will be the path requested
 			med = strtok(NULL, " ");
-			cout<<med<<endl;
 			vers = med;//This will be the HTTP version
 			vector<string>::iterator urlindex;
 			string urlhash = to_string(f(path));
 			if (method=="GET"){
-				printf("BIG IF TRUE\n");
 				if(find(urlcache.begin(), urlcache.end(), urlhash) != urlcache.end()) {
 					urlindex = find(urlcache.begin(), urlcache.end(), urlhash);
 					rotate(urlcache.begin(), urlindex, urlindex+1);
@@ -143,13 +138,14 @@ int main(int argc, char* argv[]){
 					free(messagein);
 					return 1;
 				}else{
-					printf("GOTTA BE HERE BRO\n");
-					char oldname[30];
-					strcpy(oldname, "cache/");
-					strcat(oldname, urlcache.back().c_str());
-					urlcache.pop_back();
-					remove(oldname);
-					printf("Deleted %s\n", oldname);
+					if (urlcache.size() == 100){
+						char oldname[30];
+						strcpy(oldname, "cache/");
+						strcat(oldname, urlcache.back().c_str());
+						urlcache.pop_back();
+						remove(oldname);
+						printf("Deleted %s\n", oldname);
+					}
 					urlcache.insert(urlcache.begin(), urlhash);
 					char filename[30];
 					strcpy(filename, "cache/");
@@ -205,7 +201,6 @@ int main(int argc, char* argv[]){
 				}
 			}
 			else{
-				printf("SHIT, NOT GET: %s\n", method);
 				//Send HTTP 400 Bad Request
 			}
 			free(messagein);
