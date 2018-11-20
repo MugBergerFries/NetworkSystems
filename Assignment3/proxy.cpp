@@ -86,7 +86,7 @@ int main(int argc, char* argv[]){
 			vers = med;//This will be the HTTP version
 			vector<string>::iterator urlindex;
 			string urlhash = to_string(f(path));
-			cout<<find(urlcache.begin(), urlcache.end(), urlhash)<<" - "<<urlcache.end()<<endl;
+			cout<<distance(urlcache.begin(), find(urlcache.begin(), urlcache.end(), urlhash))<<" - "<<distance(urlcache.begin(), urlcache.end())<<endl;
 			if (method=="GET"){
 				if(!urlcache.empty() && (find(urlcache.begin(), urlcache.end(), urlhash) != urlcache.end())) {
 					urlindex = find(urlcache.begin(), urlcache.end(), urlhash);
