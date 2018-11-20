@@ -192,8 +192,11 @@ int main(int argc, char* argv[]){
             		test = write(ssock, messagecpy, strlen(messagecpy));
             		cout<<"test is "<<test<<endl;
             		while((msgsize = recv(ssock, messagecpy, 100000, 0)) > 0){
+            			cout<<"Reply received: size = "<<msgsize<<endl;
 						fwrite(messagecpy, 1, 100000, curfile);//Write form buffer to file
+            			cout<<"Wrote to file"<<msgsize<<endl;
             			write(csock, messagecpy, 100000);
+            			cout<<"Sent to client"<<msgsize<<endl;
         			}
 					shutdown(ssock, SHUT_WR);//Tell client we want to close the connection
 					while (recv(ssock, messagein, 100000, 0)!=0){}//Wait for them to be ready
