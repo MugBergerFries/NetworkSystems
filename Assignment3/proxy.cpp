@@ -21,7 +21,8 @@ int main(int argc, char* argv[]){
 	int port, socksize, filesize; //webproxy port
 	int psock, csock; //proxy and client socket
 	FILE* curfile;
-	char* messagein, messagecpy;
+	char* messagein;
+	char* messagecpy;
 	vector<string> urlcache;
 	vector<int> tbd;
 	struct sockaddr_in proxy, client;//Endpoint addresses for client and proxy
