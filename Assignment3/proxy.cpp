@@ -190,7 +190,7 @@ int main(int argc, char* argv[]){
         			}
         			int test;
             		string final = ("GET " + path.substr(path.substr(11).find("/", 0)+11) + " " + vers + "\r\n\r\n");
-            		test = write(ssock, final, strlen(final));
+            		test = write(ssock, final, strlen(final.c_str()));
             		while((msgsize = recv(ssock, messagecpy, 100000, 0)) > 0){
             			cout<<"Reply received: size = "<<msgsize<<endl;
 						fwrite(messagecpy, 1, 100000, curfile);//Write form buffer to file
