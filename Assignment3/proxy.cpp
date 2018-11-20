@@ -137,7 +137,7 @@ int main(int argc, char* argv[]){
 				}else{
 					char oldname[30];
 					strcpy(oldname, "cache/");
-					strcat(filename, urlhash.pop_back().c_str());
+					strcat(oldname, urlhash.pop_back().c_str());
 					remove(oldname);
 					urlcache.insert(urlcache.begin(), urlhash);
 					char filename[30];
