@@ -73,8 +73,8 @@ int main(int argc, char* argv[]){
 			messagein = (char*)malloc(100000);//Allocate memory for the incoming message
 			messagecpy = (char*)malloc(100000);//Allocate memory for the incoming message
 			recv(csock, messagein, 100000, 0);//Receive the message
-			cout<<"\nRECEIVED MESSAGE BEGIN\n\n"<<messagein<<"RECEIVED MESSAGE END\n\n";
-			strcpy(messagecpy, messagein);
+			cout<<"\nRECEIVED MESSAGE BEGIN\n"<<messagein<<"RECEIVED MESSAGE END\n\n";
+			messagecpy = strdup(messagein);
 			cout<<messagecpy<<" is msgcpy"<<endl;
 			char* med;//Middleman to parse message
 			med = strtok(messagein, " ");//Get message until first " "
